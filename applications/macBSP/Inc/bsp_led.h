@@ -22,7 +22,17 @@ typedef	enum
 {
     LED_Name_Debug = (0x01),            /*! 调试LED */
     LED_Name_Consciousness_Judgment,    /*! 意识判断LED */
-
+    LED_Name_Pulse_Detecting,           /*! 脉搏检查LED */
+    LED_Name_Check_Breath,              /*! 呼吸检查LED */
+    LED_Name_Emergency_Call,            /*! 急救呼叫LED */
+    LED_Name_Remove_Foreign,            /*! 清除异物LED */
+    LED_Name_Body_Left,                 /*! 身形左侧LED */
+    LED_Name_Body_Right,                /*! 身形右侧LED */
+    LED_Name_Uppest,                    /*! 身形最上侧LED */
+    LED_Name_Upper,                     /*! 身形上侧LED */
+    LED_Name_Middle,                    /*! 身形中间LED */
+    LED_Name_Lower,                     /*! 身形下侧LED */
+    LED_Name_Lowest,                    /*! 身形最下侧LED */
 
 }LED_Name_TypeDef;
 
