@@ -28,7 +28,7 @@
 /* macBSP 头文件 */
 #include "bsp_hard.h"
 #include "bsp_led.h"
-
+#include "bsp_touch.h"
 
 /* macSYS 头文件 */
 #include "bsp_typedef.h"

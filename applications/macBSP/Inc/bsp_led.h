@@ -10,12 +10,73 @@
 #define MACBSP_INC_BSP_LED_H_
 #include "bsp_sys.h"
 
-#define             LED_NUM             (21)
+#define             LED_NUM             (30)
 /****************************** LED 函数宏定义***************************************/
-#define             macLED_Debug_OFF()                          HAL_GPIO_WritePin ( DEBUG_LED_GPIO_Port, DEBUG_LED_Pin , GPIO_PIN_RESET )
-#define             macLED_Debug_ON()                           HAL_GPIO_WritePin ( DEBUG_LED_GPIO_Port, DEBUG_LED_Pin , GPIO_PIN_SET )
+#define             macLED_Debug_OFF()                         HAL_GPIO_WritePin ( DEBUG_LED_GPIO_Port, DEBUG_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Debug_ON()                          HAL_GPIO_WritePin ( DEBUG_LED_GPIO_Port, DEBUG_LED_Pin , GPIO_PIN_SET )
 
+#define             macLED_Consciousness_Judgment_OFF()        HAL_GPIO_WritePin ( CONSCIOUSNESS_JUDGMENT_LED_GPIO_Port, CONSCIOUSNESS_JUDGMENT_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Consciousness_Judgment_ON()         HAL_GPIO_WritePin ( CONSCIOUSNESS_JUDGMENT_LED_GPIO_Port, CONSCIOUSNESS_JUDGMENT_LED_Pin , GPIO_PIN_SET )
 
+#define             macLED_Pulse_Detecting_OFF()               HAL_GPIO_WritePin ( PULSE_DETECTING_LED_GPIO_Port, PULSE_DETECTING_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Pulse_Detecting_ON()                HAL_GPIO_WritePin ( PULSE_DETECTING_LED_GPIO_Port, PULSE_DETECTING_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Check_Breath_OFF()                  HAL_GPIO_WritePin ( CHECK_BREATH_LED_GPIO_Port, CHECK_BREATH_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Check_Breath_ON()                   HAL_GPIO_WritePin ( CHECK_BREATH_LED_GPIO_Port, CHECK_BREATH_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Emergency_OFF()                     HAL_GPIO_WritePin ( EMERGENCY_LED_GPIO_Port, EMERGENCY_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Emergency_ON()                      HAL_GPIO_WritePin ( EMERGENCY_LED_GPIO_Port, EMERGENCY_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Remove_Foreign_OFF()                HAL_GPIO_WritePin ( REMOVE_FOREIGN_LED_GPIO_Port, REMOVE_FOREIGN_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Remove_Foreign_ON()                 HAL_GPIO_WritePin ( REMOVE_FOREIGN_LED_GPIO_Port, REMOVE_FOREIGN_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Body_Left_OFF()                     HAL_GPIO_WritePin ( BODY_LEFT_LED_GPIO_Port, BODY_LEFT_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Body_Left_ON()                      HAL_GPIO_WritePin ( BODY_LEFT_LED_GPIO_Port, BODY_LEFT_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Body_Right_OFF()                    HAL_GPIO_WritePin ( BODY_RIGHT_LED_GPIO_Port, BODY_RIGHT_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Body_Right_ON()                     HAL_GPIO_WritePin ( BODY_RIGHT_LED_GPIO_Port, BODY_RIGHT_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Uppest_OFF()                        HAL_GPIO_WritePin ( BODY_UPPEST_LED_GPIO_Port, BODY_UPPEST_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Uppest_ON()                         HAL_GPIO_WritePin ( BODY_UPPEST_LED_GPIO_Port, BODY_UPPEST_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Upper_OFF()                         HAL_GPIO_WritePin ( BODY_UPPER_LED_GPIO_Port, BODY_UPPER_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Upper_ON()                          HAL_GPIO_WritePin ( BODY_UPPER_LED_GPIO_Port, BODY_UPPER_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Middle_OFF()                        HAL_GPIO_WritePin ( BODY_MIDDLE_LED_GPIO_Port, BODY_MIDDLE_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Middle_ON()                         HAL_GPIO_WritePin ( BODY_MIDDLE_LED_GPIO_Port, BODY_MIDDLE_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Lower_OFF()                         HAL_GPIO_WritePin ( BODY_LOWWER_LED_GPIO_Port, BODY_LOWWER_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Lower_ON()                          HAL_GPIO_WritePin ( BODY_LOWWER_LED_GPIO_Port, BODY_LOWWER_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Lowest_OFF()                        HAL_GPIO_WritePin ( BODY_LOWEST_LED_GPIO_Port, BODY_LOWEST_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Lowest_ON()                         HAL_GPIO_WritePin ( BODY_LOWEST_LED_GPIO_Port, BODY_LOWEST_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Close_OFF()                         HAL_GPIO_WritePin ( CLOSE_LED_GPIO_Port, CLOSE_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Close_ON()                          HAL_GPIO_WritePin ( CLOSE_LED_GPIO_Port, CLOSE_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Competition_OFF()                   HAL_GPIO_WritePin ( COMPETITION_LED_GPIO_Port, COMPETITION_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Competition_ON()                    HAL_GPIO_WritePin ( COMPETITION_LED_GPIO_Port, COMPETITION_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Assess_OFF()                        HAL_GPIO_WritePin ( ASSESS_LED_GPIO_Port, ASSESS_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Assess_ON()                         HAL_GPIO_WritePin ( ASSESS_LED_GPIO_Port, ASSESS_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Train_OFF()                         HAL_GPIO_WritePin ( TRAIN_LED_GPIO_Port, TRAIN_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Train_ON()                          HAL_GPIO_WritePin ( TRAIN_LED_GPIO_Port, TRAIN_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Minus_Sign_OFF()                    HAL_GPIO_WritePin ( MINUS_SIGN_LED_GPIO_Port, MINUS_SIGN_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Minus_Sign_ON()                     HAL_GPIO_WritePin ( MINUS_SIGN_LED_GPIO_Port, MINUS_SIGN_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Plus_Sign_OFF()                     HAL_GPIO_WritePin ( PLUS_SIGN_LED_GPIO_Port, PLUS_SIGN_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Plus_Sign_ON()                      HAL_GPIO_WritePin ( PLUS_SIGN_LED_GPIO_Port, PLUS_SIGN_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Setting_OFF()                       HAL_GPIO_WritePin ( SETTING_LED_GPIO_Port, SETTING_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Setting_ON()                        HAL_GPIO_WritePin ( SETTING_LED_GPIO_Port, SETTING_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Printer_OFF()                       HAL_GPIO_WritePin ( PRINTER_LED_GPIO_Port, PRINTER_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Printer_ON()                        HAL_GPIO_WritePin ( PRINTER_LED_GPIO_Port, PRINTER_LED_Pin , GPIO_PIN_SET )
+
+#define             macLED_Start_OFF()                         HAL_GPIO_WritePin ( START_LED_GPIO_Port, START_LED_Pin , GPIO_PIN_RESET )
+#define             macLED_Start_ON()                          HAL_GPIO_WritePin ( START_LED_GPIO_Port, START_LED_Pin , GPIO_PIN_SET )
 
 /*LED名称类型*/
 typedef	enum
@@ -33,6 +94,15 @@ typedef	enum
     LED_Name_Middle,                    /*! 身形中间LED */
     LED_Name_Lower,                     /*! 身形下侧LED */
     LED_Name_Lowest,                    /*! 身形最下侧LED */
+    LED_Name_Close,                     /*! 复位LED */
+    LED_Name_Competition,               /*! 竞赛LED */
+    LED_Name_Assess,                    /*! 考核LED */
+    LED_Name_Train,                     /*! 训练LED */
+    LED_Name_Minus_Sign,                /*! 减号LED */
+    LED_Name_Plus_Sign,                 /*! 加号LED */
+    LED_Name_Setting,                   /*! 设置LED */
+    LED_Name_Printer,                   /*! 打印LED */
+    LED_Name_Start,                     /*! 开启LED */
 
 }LED_Name_TypeDef;
 

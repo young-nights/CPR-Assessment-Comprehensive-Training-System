@@ -18,7 +18,7 @@ config PKGS_DIR
 config PLATFORM_DIR
     string
     option env="PLATFORM_DIR"
-    default "D:/RT-ThreadStudio/workspace/CPR-Assessment-Comprehensive-Training-System_Ver1.0/platform"
+    default "I:/Outsource_Design_Workspace/FreeRTOS_CubeMX_Workspace/Floder-001-Cardiopulmonary/RTTHREAD/CPR-Assessment-Comprehensive-Training-System_Ver1.0/platform"
 
 source "$RTT_DIR/Kconfig"
 source "$PKGS_DIR/Kconfig"

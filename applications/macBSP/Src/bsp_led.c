@@ -12,7 +12,7 @@
 /*---------------------------------------------------------------------------------------------------------------*/
 /* 以下是LED驱动函数（可移植通用）                                                                                                                                                          */
 /*---------------------------------------------------------------------------------------------------------------*/
-#define 	LED_MAX				(21)				// LED's Number
+#define 	LED_MAX				(30)				// LED's Number
 #define 	LED_Name_First		(1)					// bsp_led.h中的首个LED值应与此值一致，且其他LED值须在此基础上连续递增(枚举类型)
 #define		OUT_CYCLE			(100)				// LED输出周期
 #define		GRAD_DEC			(5)					// LED渐灭速度（占空比递减的间隔时间毫秒数）
@@ -267,8 +267,108 @@ void LED_Out(int8_t ledName, int8_t ledState)
 			break;
 
 		case LED_Name_Consciousness_Judgment:
-            if(ledState)    macLED_Debug_ON();
-            else            macLED_Debug_OFF();
+            if(ledState)    macLED_Consciousness_Judgment_ON();
+            else            macLED_Consciousness_Judgment_OFF();
+            break;
+
+        case LED_Name_Pulse_Detecting:
+            if(ledState)    macLED_Pulse_Detecting_ON();
+            else            macLED_Pulse_Detecting_OFF();
+            break;
+
+        case LED_Name_Check_Breath:
+            if(ledState)    macLED_Check_Breath_ON();
+            else            macLED_Check_Breath_OFF();
+            break;
+
+        case LED_Name_Emergency_Call:
+            if(ledState)    macLED_Emergency_ON();
+            else            macLED_Emergency_OFF();
+            break;
+
+        case LED_Name_Remove_Foreign:
+            if(ledState)    macLED_Remove_Foreign_ON();
+            else            macLED_Remove_Foreign_OFF();
+            break;
+
+        case LED_Name_Body_Left:
+            if(ledState)    macLED_Body_Left_ON();
+            else            macLED_Body_Left_OFF();
+            break;
+
+        case LED_Name_Body_Right:
+            if(ledState)    macLED_Body_Right_ON();
+            else            macLED_Body_Right_OFF();
+            break;
+
+        case LED_Name_Uppest:
+            if(ledState)    macLED_Uppest_ON();
+            else            macLED_Uppest_OFF();
+            break;
+
+        case LED_Name_Upper:
+            if(ledState)    macLED_Upper_ON();
+            else            macLED_Upper_OFF();
+            break;
+
+        case LED_Name_Middle:
+            if(ledState)    macLED_Middle_ON();
+            else            macLED_Middle_OFF();
+            break;
+
+        case LED_Name_Lower:
+            if(ledState)    macLED_Lower_ON();
+            else            macLED_Lower_OFF();
+            break;
+
+        case LED_Name_Lowest:
+            if(ledState)    macLED_Lowest_ON();
+            else            macLED_Lowest_OFF();
+            break;
+
+        case LED_Name_Close:
+            if(ledState)    macLED_Close_ON();
+            else            macLED_Close_OFF();
+            break;
+
+        case LED_Name_Competition:
+            if(ledState)    macLED_Competition_ON();
+            else            macLED_Competition_OFF();
+            break;
+
+        case LED_Name_Assess:
+            if(ledState)    macLED_Assess_ON();
+            else            macLED_Assess_OFF();
+            break;
+
+        case LED_Name_Train:
+            if(ledState)    macLED_Train_ON();
+            else            macLED_Train_OFF();
+            break;
+
+        case LED_Name_Minus_Sign:
+            if(ledState)    macLED_Minus_Sign_ON();
+            else            macLED_Minus_Sign_OFF();
+            break;
+
+        case LED_Name_Plus_Sign:
+            if(ledState)    macLED_Plus_Sign_ON();
+            else            macLED_Plus_Sign_OFF();
+            break;
+
+        case LED_Name_Setting:
+            if(ledState)    macLED_Setting_ON();
+            else            macLED_Setting_OFF();
+            break;
+
+        case LED_Name_Printer:
+            if(ledState)    macLED_Printer_ON();
+            else            macLED_Printer_OFF();
+            break;
+
+        case LED_Name_Start:
+            if(ledState)    macLED_Start_ON();
+            else            macLED_Start_OFF();
             break;
 	}
 	#endif

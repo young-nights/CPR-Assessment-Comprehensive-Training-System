@@ -47,7 +47,6 @@ UART_HandleTypeDef huart1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -189,9 +188,9 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
@@ -240,6 +239,18 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(CLOSE_LED_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : AI12_P0_Pin AI12_P1_Pin AI12_P2_Pin */
+  GPIO_InitStruct.Pin = AI12_P0_Pin|AI12_P1_Pin|AI12_P2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : AI12_P3_Pin */
+  GPIO_InitStruct.Pin = AI12_P3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(AI12_P3_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pins : BODY_UPPER_LED_Pin BODY_UPPEST_LED_Pin */
   GPIO_InitStruct.Pin = BODY_UPPER_LED_Pin|BODY_UPPEST_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -277,6 +288,8 @@ void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+
 
 #ifdef  USE_FULL_ASSERT
 /**
