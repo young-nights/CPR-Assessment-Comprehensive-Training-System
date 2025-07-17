@@ -47,6 +47,12 @@ typedef enum
 } AI12_Key_t;
 
 
+typedef enum
+{
+    TM1629A_A = 0,
+    TM1629A_B,
+    TM1638_A
+} TM16xxSelect;
 
 
 
