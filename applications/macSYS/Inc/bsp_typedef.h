@@ -29,6 +29,24 @@ extern RecordStruct Record;
 
 
 
+typedef enum
+{
+    AI12_KEY_NONE = 0,
+    AI12_KEY_1,
+    AI12_KEY_2,
+    AI12_KEY_3,
+    AI12_KEY_4,
+    AI12_KEY_5,
+    AI12_KEY_6,
+    AI12_KEY_7,
+    AI12_KEY_8,
+    AI12_KEY_9,
+    AI12_KEY_10,
+    AI12_KEY_11,
+    AI12_KEY_12
+} AI12_Key_t;
+
+
 
 
 
