@@ -195,7 +195,9 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, START_LED_Pin|PRINTER_LED_Pin|SETTING_LED_Pin|PLUS_SIGN_LED_Pin
-                          |MINUS_SIGN_LED_Pin|BODY_LOWEST_LED_Pin|BODY_LOWWER_LED_Pin|BODY_MIDDLE_LED_Pin, GPIO_PIN_RESET);
+                          |MINUS_SIGN_LED_Pin|BODY_LOWEST_LED_Pin|TM1638_DIO_Pin|TM1638_CLK_Pin
+                          |TM1638_STB_Pin|BODY_LOWWER_LED_Pin|BODY_MIDDLE_LED_Pin|TM1629B_CLK_Pin
+                          |TM1629B_STB_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, TRAIN_LED_Pin|ASSESS_LED_Pin|COMPETITION_LED_Pin, GPIO_PIN_RESET);
@@ -204,7 +206,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(CLOSE_LED_GPIO_Port, CLOSE_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, BODY_UPPER_LED_Pin|BODY_UPPEST_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, BODY_UPPER_LED_Pin|BODY_UPPEST_LED_Pin|TM1629B_DIO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(BODY_RIGHT_LED_GPIO_Port, BODY_RIGHT_LED_Pin, GPIO_PIN_RESET);
@@ -214,12 +216,16 @@ void MX_GPIO_Init(void)
                           |PULSE_DETECTING_LED_Pin|CONSCIOUSNESS_JUDGMENT_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, TM1629A_STB_Pin|TM1629A_DIO_Pin|TM1629A_CLK_Pin|DEBUG_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : START_LED_Pin PRINTER_LED_Pin SETTING_LED_Pin PLUS_SIGN_LED_Pin
-                           MINUS_SIGN_LED_Pin BODY_LOWEST_LED_Pin BODY_LOWWER_LED_Pin BODY_MIDDLE_LED_Pin */
+                           MINUS_SIGN_LED_Pin BODY_LOWEST_LED_Pin TM1638_DIO_Pin TM1638_CLK_Pin
+                           TM1638_STB_Pin BODY_LOWWER_LED_Pin BODY_MIDDLE_LED_Pin TM1629B_CLK_Pin
+                           TM1629B_STB_Pin */
   GPIO_InitStruct.Pin = START_LED_Pin|PRINTER_LED_Pin|SETTING_LED_Pin|PLUS_SIGN_LED_Pin
-                          |MINUS_SIGN_LED_Pin|BODY_LOWEST_LED_Pin|BODY_LOWWER_LED_Pin|BODY_MIDDLE_LED_Pin;
+                          |MINUS_SIGN_LED_Pin|BODY_LOWEST_LED_Pin|TM1638_DIO_Pin|TM1638_CLK_Pin
+                          |TM1638_STB_Pin|BODY_LOWWER_LED_Pin|BODY_MIDDLE_LED_Pin|TM1629B_CLK_Pin
+                          |TM1629B_STB_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -251,8 +257,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(AI12_P3_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BODY_UPPER_LED_Pin BODY_UPPEST_LED_Pin */
-  GPIO_InitStruct.Pin = BODY_UPPER_LED_Pin|BODY_UPPEST_LED_Pin;
+  /*Configure GPIO pins : BODY_UPPER_LED_Pin BODY_UPPEST_LED_Pin TM1629B_DIO_Pin */
+  GPIO_InitStruct.Pin = BODY_UPPER_LED_Pin|BODY_UPPEST_LED_Pin|TM1629B_DIO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -274,12 +280,12 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : DEBUG_LED_Pin */
-  GPIO_InitStruct.Pin = DEBUG_LED_Pin;
+  /*Configure GPIO pins : TM1629A_STB_Pin TM1629A_DIO_Pin TM1629A_CLK_Pin DEBUG_LED_Pin */
+  GPIO_InitStruct.Pin = TM1629A_STB_Pin|TM1629A_DIO_Pin|TM1629A_CLK_Pin|DEBUG_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(DEBUG_LED_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
