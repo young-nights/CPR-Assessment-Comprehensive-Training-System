@@ -58,33 +58,33 @@ static void TM1629A_Write_Byte(TM16xxSelect tube , rt_uint8_t data)
     if(tube == TM1629A_A){
         for(rt_uint8_t i = 0; i < 8; i++)
         {
-            TM1629A_CLK_L();
-            if(dat & 0x01){
-                TM1629A_DIO_H();
+            TM1629A_A_CLK_L();
+            if(data & 0x01){
+                TM1629A_A_DIO_H();
             }
             else {
-                TM1629A_DIO_L();
+                TM1629A_A_DIO_L();
             }
             TM1629A_Delay_us(2);
-            TM1629A_CLK_H();
+            TM1629A_A_CLK_H();
             TM1629A_Delay_us(2);
-            dat >>= 1;
+            data >>= 1;
         }
     }
     else if(tube == TM1629A_B){
         for(rt_uint8_t i = 0; i < 8; i++)
         {
-            TM1629B_CLK_L();
-            if(dat & 0x01){
-                TM1629A_DIO_H();
+            TM1629A_B_CLK_L();
+            if(data & 0x01){
+                TM1629A_B_DIO_H();
             }
             else {
-                TM1629A_DIO_L();
+                TM1629A_B_DIO_L();
             }
             TM1629A_Delay_us(2);
-            TM1629B_CLK_H();
+            TM1629A_B_CLK_H();
             TM1629A_Delay_us(2);
-            dat >>= 1;
+            data >>= 1;
         }
     }
 }

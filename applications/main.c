@@ -35,7 +35,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  ledTimer_Init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -50,6 +50,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+      LED_Blink(LED_Name_Debug,1,0,0);
       rt_thread_mdelay(500);
     /* USER CODE BEGIN 3 */
   }
