@@ -50,7 +50,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-      LED_Blink(LED_Name_Debug,2,0,0);
+      LED_Blink(LED_Name_Debug,1,0,0);
 
       rt_thread_mdelay(500);
     /* USER CODE BEGIN 3 */
