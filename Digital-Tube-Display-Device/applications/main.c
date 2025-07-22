@@ -51,7 +51,9 @@ int main(void)
   {
     /* USER CODE END WHILE */
       LED_Blink(LED_Name_Debug,1,0,0);
-
+//      LED_Blink(LED_Name_Competition, 1, 0, 0);
+//      LED_Blink(LED_Name_Train, 1, 0, 0);
+//      LED_Blink(LED_Name_Assess, 1, 0, 0);
       rt_thread_mdelay(500);
     /* USER CODE BEGIN 3 */
   }

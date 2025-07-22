@@ -14,23 +14,23 @@
 /* 把 4 位 BCD 值映射到键码表 */
 static const AI12_Key_t key_map[16] =
 {
-    /* 0x0 */ AI12_KEY_1,
-    /* 0x1 */ AI12_KEY_2,
-    /* 0x2 */ AI12_KEY_3,
-    /* 0x3 */ AI12_KEY_4,
-    /* 0x4 */ AI12_KEY_5,
-    /* 0x5 */ AI12_KEY_6,
-    /* 0x6 */ AI12_KEY_7,
-    /* 0x7 */ AI12_KEY_8,
-    /* 0x8 */ AI12_KEY_9,
-    /* 0x9 */ AI12_KEY_10,
-    /* 0xA */ AI12_KEY_11,
-    /* 0xB */ AI12_KEY_12,
-    /* 0xC..0xE 未使用，返回 NONE */
-    [0xC]  = AI12_KEY_NONE,
-    [0xD]  = AI12_KEY_NONE,
-    [0xE]  = AI12_KEY_NONE,
-    /* 0xF = 1111b → 无按键 */
+    /* 0x00 */ AI12_KEY_1,
+    /* 0x01 */ AI12_KEY_2,
+    /* 0x02 */ AI12_KEY_3,
+    /* 0x03 */ AI12_KEY_4,
+    /* 0x04 */ AI12_KEY_5,
+    /* 0x05 */ AI12_KEY_6,
+    /* 0x06 */ AI12_KEY_7,
+    /* 0x07 */ AI12_KEY_8,
+    /* 0x08 */ AI12_KEY_9,
+    /* 0x09 */ AI12_KEY_10,
+    /* 0x0A */ AI12_KEY_11,
+    /* 0x0B */ AI12_KEY_12,
+    /* 0x0C..0x0E 未使用，返回 NONE */
+    [0x0C]  = AI12_KEY_NONE,
+    [0x0D]  = AI12_KEY_NONE,
+    [0x0E]  = AI12_KEY_NONE,
+    /* 0x0F = 1111b → 无按键 */
     [0xF]  = AI12_KEY_NONE
 };
 
@@ -73,40 +73,40 @@ void AI12_Thread_entry(void* parameter)
 
         }
         else if(keyValue == AI12_KEY_1){
-
+            rt_kprintf("Press1\r\n");
         }
         else if(keyValue == AI12_KEY_2){
-
+            rt_kprintf("Press2\r\n");
         }
         else if(keyValue == AI12_KEY_3){
-
+            rt_kprintf("Press3\r\n");
         }
         else if(keyValue == AI12_KEY_4){
-
+            rt_kprintf("Press4\r\n");
         }
         else if(keyValue == AI12_KEY_5){
-
+            rt_kprintf("Press5\r\n");
         }
         else if(keyValue == AI12_KEY_6){
-
+            rt_kprintf("Press6\r\n");
         }
         else if(keyValue == AI12_KEY_7){
-
+            rt_kprintf("Press7\r\n");
         }
         else if(keyValue == AI12_KEY_8){
-
+            rt_kprintf("Press8\r\n");
         }
         else if(keyValue == AI12_KEY_9){
-
+            rt_kprintf("Press9\r\n");
         }
         else if(keyValue == AI12_KEY_10){
-
+            rt_kprintf("Press10\r\n");
         }
         else if(keyValue == AI12_KEY_11){
-
+            rt_kprintf("Press11\r\n");
         }
         else if(keyValue == AI12_KEY_12){
-
+            rt_kprintf("Press12\r\n");
         }
 
         rt_thread_mdelay(10);
