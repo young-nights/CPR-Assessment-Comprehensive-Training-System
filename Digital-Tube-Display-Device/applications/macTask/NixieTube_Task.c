@@ -34,6 +34,24 @@
 
 //---------------------------------------------------------------------------------------
 
+
+/* ---------- 共阳段码表（低电平亮） ---------- */
+static const uint8_t seg_code[] = {
+    0xC0, // 0
+    0xF9, // 1
+    0xA4, // 2
+    0xB0, // 3
+    0x99, // 4
+    0x92, // 5
+    0x82, // 6
+    0xF8, // 7
+    0x80, // 8
+    0x90  // 9
+};
+
+//---------------------------------------------------------------------------------------
+
+
 /**
   * @brief  Delay function(uint:ms)
   * @param  us 微妙数
@@ -137,8 +155,61 @@ void TM1629A_Init(void)
   */
 void TM1629A_Digital_Tube_Clear(void)
 {
+    /* 本次共有4个3位数码管，合计12位，因此初始化12个元素的清除数组 */
+    rt_uint8_t clear_buf[12] = { 0xFF };
 
 }
+
+
+/**
+  * @brief  TM1629A Set digital tube Brightness
+  * @param  level: 亮度等级0~7
+  *         tube : 选择控制数码管的芯片
+  * @retval void
+  * @note   找到寄存器手册的显示控制命令设置（用于设置亮度强度和显示使能）
+  */
+void TM1629A_Digital_Tube_Set_Brightness(TM16xxSelect tube, rt_uint8_t level)
+{
+    #define DISPLAY_RES_BASE    0x88
+
+    if(level > 7){
+        level = 7;
+    }
+
+    rt_uint8_t cmd = DISPLAY_RES_BASE | level;
+
+    TM1629A_Write_CMD(tube, cmd);
+
+}
+
+
+/**
+  * @brief  TM1629A control digittal tube show number
+  * @param  *digits: 共阳段码表的首地址指针
+  * @retval void
+  * @note
+  */
+/* 显示 12 位数字（digits[0] = 最左边位） */
+void TM1629A_Digital_Tube_ShowTest(TM16xxSelect tube,const uint8_t *digits)
+{
+    uint8_t buf[12];
+    for(uint8_t i = 0; i < 12; i++)
+    {
+        if(digits[i] <= 9)
+            buf[i] = seg_code[digits[i]];
+        else
+            buf[i] = 0xFF; // 熄
+    }
+
+    STB_L();
+    write_byte(0xC0);   // 起始地址 00H
+    for(uint8_t i = 0; i < 12; i++)
+        write_byte(buf[i]);
+    STB_H();
+}
+
+
+
 
 
 
@@ -150,6 +221,7 @@ void TM1629A_Digital_Tube_Clear(void)
 void NixieTube_Thread_entry(void* parameter)
 {
 
+    TM1629A_Init();
 
     for(;;)
     {
