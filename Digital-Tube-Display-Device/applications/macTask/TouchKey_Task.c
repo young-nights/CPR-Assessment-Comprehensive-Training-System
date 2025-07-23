@@ -42,14 +42,19 @@ static const AI12_Key_t key_map[16] =
  **/
 AI12_Key_t AI12_ScanKey(void)
 {
-    rt_uint8_t bcd = 0;
+    static rt_uint8_t bcd = 0;
+    static rt_uint8_t index = 0;
 
     bcd  = HAL_GPIO_ReadPin(AI12_P0_GPIO_Port, AI12_P0_Pin) ? (1 << 3) : 0;
     bcd |= HAL_GPIO_ReadPin(AI12_P1_GPIO_Port, AI12_P1_Pin) ? (1 << 2) : 0;
     bcd |= HAL_GPIO_ReadPin(AI12_P2_GPIO_Port, AI12_P2_Pin) ? (1 << 1) : 0;
     bcd |= HAL_GPIO_ReadPin(AI12_P3_GPIO_Port, AI12_P3_Pin) ? (1 << 0) : 0;
 
-    return key_map[bcd & 0x0F];
+    /* 计算索引值 */
+    index = bcd & 0x0F;
+
+    /* 返回键值 */
+    return key_map[index];
 }
 
 
@@ -109,7 +114,7 @@ void AI12_Thread_entry(void* parameter)
             rt_kprintf("Press12\r\n");
         }
 
-        rt_thread_mdelay(10);
+        rt_thread_mdelay(50);
     }
 
 
@@ -125,7 +130,7 @@ int AI12_Thread_Init(void)
 {
     rt_thread_t AI12_Task_Handle = RT_NULL;
     /* 创建检查一些系统状态标志的线程  -- 优先级：25 */
-    AI12_Task_Handle = rt_thread_create("AI12_Thread_entry", AI12_Thread_entry, RT_NULL, 512, 25, 30);
+    AI12_Task_Handle = rt_thread_create("AI12_Thread_entry", AI12_Thread_entry, RT_NULL, 512, 25, 300);
     /* 检查是否创建成功,成功就启动线程 */
     if(AI12_Task_Handle != RT_NULL)
     {
