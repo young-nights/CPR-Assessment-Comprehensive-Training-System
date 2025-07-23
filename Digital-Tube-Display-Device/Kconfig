@@ -18,7 +18,7 @@ config PKGS_DIR
 config PLATFORM_DIR
     string
     option env="PLATFORM_DIR"
-    default "E:/Outsource_Item_Workspace/Floder-001-Cardiopulmonary/RTTHREAD/CPR-Assessment-Comprehensive-Training-System/platform"
+    default "E:/Outsource_Item_Workspace/Floder-001-Cardiopulmonary/CPR-Assessment-Comprehensive-Training-System/Digital-Tube-Display-Device/platform"
 
 source "$RTT_DIR/Kconfig"
 source "$PKGS_DIR/Kconfig"
