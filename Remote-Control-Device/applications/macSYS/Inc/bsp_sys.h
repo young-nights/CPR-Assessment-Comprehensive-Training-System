@@ -34,6 +34,8 @@
 #include "lcd_driver.h"
 #include "st7789_driver.h"
 #include "st7789_spi.h"
+#include "bsp_battery.h"
+
 
 
 /* macSYS 头文件 */
