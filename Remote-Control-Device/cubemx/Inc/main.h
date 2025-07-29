@@ -36,7 +36,9 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+extern ADC_HandleTypeDef hadc1;
 extern SPI_HandleTypeDef hspi1;
+extern SPI_HandleTypeDef hspi3;
 extern UART_HandleTypeDef huart1;
 /* USER CODE END ET */
 
@@ -46,6 +48,8 @@ void SystemClock_Config(void);
 void MX_GPIO_Init(void);
 void MX_SPI1_Init(void);
 void MX_USART1_UART_Init(void);
+void MX_SPI3_Init(void);
+void MX_ADC1_Init(void);
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -60,6 +64,18 @@ void MX_USART1_UART_Init(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LED_GREEN_Pin GPIO_PIN_0
+#define LED_GREEN_GPIO_Port GPIOC
+#define BAT_STDBY_Pin GPIO_PIN_2
+#define BAT_STDBY_GPIO_Port GPIOC
+#define BAT_EN_Pin GPIO_PIN_3
+#define BAT_EN_GPIO_Port GPIOC
+#define BAT_PROG_Pin GPIO_PIN_0
+#define BAT_PROG_GPIO_Port GPIOA
+#define BAT_VOL_Pin GPIO_PIN_1
+#define BAT_VOL_GPIO_Port GPIOA
+#define BAT_CHARG_Pin GPIO_PIN_3
+#define BAT_CHARG_GPIO_Port GPIOA
 #define TOUCH_RST_Pin GPIO_PIN_4
 #define TOUCH_RST_GPIO_Port GPIOA
 #define LCD_DC_Pin GPIO_PIN_4
@@ -68,6 +84,10 @@ void MX_USART1_UART_Init(void);
 #define LCD_RST_GPIO_Port GPIOC
 #define LCD_CS_Pin GPIO_PIN_0
 #define LCD_CS_GPIO_Port GPIOB
+#define LORA_IRQ_Pin GPIO_PIN_10
+#define LORA_IRQ_GPIO_Port GPIOB
+#define LORA_CE_Pin GPIO_PIN_11
+#define LORA_CE_GPIO_Port GPIOB
 #define Matrixkey_Row1_Pin GPIO_PIN_12
 #define Matrixkey_Row1_GPIO_Port GPIOB
 #define Matrixkey_Row2_Pin GPIO_PIN_13
@@ -82,8 +102,8 @@ void MX_USART1_UART_Init(void);
 #define Matrixkey_Column2_GPIO_Port GPIOC
 #define Matrixkey_Column3_Pin GPIO_PIN_8
 #define Matrixkey_Column3_GPIO_Port GPIOC
-#define LED_GREEN_Pin GPIO_PIN_15
-#define LED_GREEN_GPIO_Port GPIOA
+#define LORA_NSS_Pin GPIO_PIN_15
+#define LORA_NSS_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 
