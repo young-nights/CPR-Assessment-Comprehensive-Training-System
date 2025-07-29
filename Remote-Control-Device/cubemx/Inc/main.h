@@ -36,6 +36,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+extern ADC_HandleTypeDef hadc1;
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi3;
 extern UART_HandleTypeDef huart1;
@@ -47,6 +48,8 @@ void SystemClock_Config(void);
 void MX_GPIO_Init(void);
 void MX_SPI1_Init(void);
 void MX_USART1_UART_Init(void);
+void MX_SPI3_Init(void);
+void MX_ADC1_Init(void);
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
