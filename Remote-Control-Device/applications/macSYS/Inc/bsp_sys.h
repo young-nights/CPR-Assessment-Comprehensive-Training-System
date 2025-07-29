@@ -35,7 +35,7 @@
 #include "st7789_driver.h"
 #include "st7789_spi.h"
 #include "bsp_battery.h"
-
+#include "bsp_lora_spi.h"
 
 
 /* macSYS 头文件 */
