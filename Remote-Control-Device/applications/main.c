@@ -15,7 +15,7 @@
   * @brief  The application entry point.
   * @retval int
   */
-__WEAK int main(void)
+int main(void)
 {
 
   /* USER CODE BEGIN 1 */
@@ -47,6 +47,7 @@ __WEAK int main(void)
   /* USER CODE BEGIN 2 */
   //-------BSP板级硬件初始化----------
   lv_port_disp_init();
+  lv_user_gui_init();
   //-------软件定时器初始化----------
   rt_kprintf("----------------------------------------\r\n");
   sysTimer_Init();

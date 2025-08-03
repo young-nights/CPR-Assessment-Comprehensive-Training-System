@@ -46,7 +46,7 @@
 /* LVGL 路径下头文件 */
 #include "gui_guider.h"
 #include "lvgl_gui.h"
-
+#include "lv_port_disp.h"
 
 
 // 这个宏用于使能lv_printf.c文件中的lv_snprintf()函数
