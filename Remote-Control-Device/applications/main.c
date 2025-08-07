@@ -45,16 +45,11 @@ int main(void)
   MX_SPI3_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-  //-------BSP板级硬件初始化----------
-  lv_port_disp_init();
-  lv_user_gui_init();
   //-------软件定时器初始化----------
   rt_kprintf("----------------------------------------\r\n");
   sysTimer_Init();
   keyTimer_Init();
   ledTimer_Init();
-
-
 
   /* USER CODE END 2 */
 
@@ -63,10 +58,16 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-      LED_Blink(LED_Name_Green, 1, 0, 0);
+
+
+
       rt_thread_mdelay(500);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
+
+
+
+
 

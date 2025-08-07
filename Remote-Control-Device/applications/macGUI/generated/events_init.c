@@ -10,11 +10,34 @@
 #include "events_init.h"
 #include <stdio.h>
 #include "lvgl.h"
+#include "gui_guider.h"
+
 
 #if LV_USE_GUIDER_SIMULATOR && LV_USE_FREEMASTER
 #include "freemaster_client.h"
 #endif
 
+
+lv_ui guider_ui;
+
+static void screen_btn_1_event_handler (lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+    case LV_EVENT_CLICKED:
+    {
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen_1, guider_ui.screen_1_del, &guider_ui.screen_del, setup_scr_screen_1, LV_SCR_LOAD_ANIM_FADE_ON, 100, 50, false, true);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void events_init_screen (lv_ui *ui)
+{
+    lv_obj_add_event_cb(ui->screen_btn_1, screen_btn_1_event_handler, LV_EVENT_ALL, ui);
+}
 
 
 void events_init(lv_ui *ui)

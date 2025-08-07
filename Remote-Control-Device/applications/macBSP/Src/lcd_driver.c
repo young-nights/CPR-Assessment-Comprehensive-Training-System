@@ -265,3 +265,5 @@ void lcd_fill_array(rt_uint16_t x_start, rt_uint16_t y_start, rt_uint16_t x_end,
     rt_spi_send(spi_dev_tft, pcolor, size);
 }
 
+
+
