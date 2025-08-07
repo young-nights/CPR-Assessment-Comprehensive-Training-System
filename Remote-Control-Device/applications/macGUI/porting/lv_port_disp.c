@@ -131,7 +131,7 @@ static void disp_init(void)
     /*You code here*/
     lcd_init();
     lcd_set_color(BACK_COLOR,FORE_COLOR);
-    lcd_clear(FORE_COLOR);
+    lcd_clear(BACK_COLOR);
 }
 
 
