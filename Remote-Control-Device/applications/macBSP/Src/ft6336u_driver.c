@@ -37,6 +37,16 @@ void FT6336U_RESET(void)
 
 
 
+/**
+ * @brief  ft6336u工作模式切换
+ * @param  void
+ * @return NULL
+ */
+void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
+{
+    iic_ft6336u_write_reg(bus, &cmd);
+}
+
 
 
 /**
