@@ -26,7 +26,7 @@ void FT6336U_Thread_entry(void* parameter)
     for(;;)
     {
 
-        rt_thread_mdelay(10);
+        rt_thread_mdelay(20);
     }
 
 
@@ -42,7 +42,7 @@ int FT6336U_Thread_Init(void)
 {
     rt_thread_t FT6336U_Task_Handle = RT_NULL;
     /* 创建检查一些系统状态标志的线程  -- 优先级：25 */
-    FT6336U_Task_Handle = rt_thread_create("FT6336U_Thread_entry", FT6336U_Thread_entry, RT_NULL, 512, 25, 300);
+    FT6336U_Task_Handle = rt_thread_create("FT6336U_Thread_entry", FT6336U_Thread_entry, RT_NULL, 512, 10, 300);
     /* 检查是否创建成功,成功就启动线程 */
     if(FT6336U_Task_Handle != RT_NULL)
     {
@@ -55,7 +55,7 @@ int FT6336U_Thread_Init(void)
 
     return RT_EOK;
 }
-//INIT_APP_EXPORT(FT6336U_Thread_Init);
+INIT_APP_EXPORT(FT6336U_Thread_Init);
 
 
 

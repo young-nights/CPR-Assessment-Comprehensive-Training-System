@@ -36,6 +36,18 @@ void FT6336U_RESET(void)
 }
 
 
+/**
+ * @brief  ft6336u工作模式切换
+ * @param  void
+ * @return NULL
+ */
+void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
+{
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CIPHER_HIGH);
+}
+
+
+
 
 
 
@@ -57,15 +69,19 @@ void FT6336U_READ_INFO(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
     /* 根据数据手册，进行读操作时，按照 “从机地址 + 发送标志 + 寄存器地址 ”进行第一次发送  */
     iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CIPHER_HIGH);
     iic_ft6336u_read_reg(bus, 1, &info_buf[0]);
+    rt_kprintf("info_buf[0] = %x\r\n",info_buf[0]);
 
     iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CIPHER_MIDE);
     iic_ft6336u_read_reg(bus, 1, &info_buf[1]);
+    rt_kprintf("info_buf[1] = %x\r\n",info_buf[1]);
 
     iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CIPHER_LOW);
     iic_ft6336u_read_reg(bus, 1, &info_buf[2]);
+    rt_kprintf("info_buf[2] = %x\r\n",info_buf[2]);
 
     info->CPIPHER_INFO = (info_buf[0] << 16) + (info_buf[1] << 8) + info_buf[2];
     rt_kprintf("PRINTF:%d. info->CPIPHER_INFO == %x \r\n",Record.kprintf_cnt++,info->CPIPHER_INFO);
+
     if(info->CPIPHER_INFO == 0xFFFF00){
         rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6236G \r\n",Record.kprintf_cnt++);
     }

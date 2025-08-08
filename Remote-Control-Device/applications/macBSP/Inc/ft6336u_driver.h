@@ -17,7 +17,7 @@
 //FT6336U芯片相关信息结构液体
 typedef struct
 {
-    unsigned long    CPIPHER_INFO;
+    unsigned long  CPIPHER_INFO;
     uint16_t    LIB_VERSION;
     uint8_t     FIRMWARE_VERSION;
     uint8_t     VENDOR_ID;
