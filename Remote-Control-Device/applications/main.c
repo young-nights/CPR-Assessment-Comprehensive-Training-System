@@ -50,11 +50,6 @@ int main(void)
   sysTimer_Init();
   keyTimer_Init();
   ledTimer_Init();
-  //-------BSP板级硬件初始化----------
-  lv_init();
-  lv_port_disp_init();
-  lv_user_gui_init();
-
 
   /* USER CODE END 2 */
 
@@ -64,7 +59,6 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-      LED_Blink(LED_Name_Green, 1, 0, 0);
 
       rt_thread_mdelay(500);
     /* USER CODE BEGIN 3 */
