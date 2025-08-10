@@ -33,6 +33,7 @@ void FT6336U_RESET(void)
     TOUCH_RST_SET(0);
     rt_thread_mdelay(120);
     TOUCH_RST_SET(1);
+    rt_thread_mdelay(300);
 }
 
 
@@ -42,9 +43,25 @@ void FT6336U_RESET(void)
  * @param  void
  * @return NULL
  */
-void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
+#define WORK_MODE       0xf4    // 工作模式
+#define FACTORY_MODE    0xf3    // 工厂模式
+void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t mode)
 {
-    iic_ft6336u_write_reg(bus, &cmd);
+    static rt_uint8_t change_cmd,change_reg = 0;
+    if(mode == 0xF4)
+    {
+        change_reg = 0x00;
+        change_cmd = 0x00;
+        iic_ft6336u_write_reg_nbytes(bus, change_reg, &change_cmd, 1);
+        rt_kprintf("PRINTF:%d. Set work mode for FT6336U chip.\r\n",Record.kprintf_cnt++);
+    }
+    else if (mode == 0xF3)
+    {
+        change_reg = 0x40;
+        change_cmd = 0x00;
+        iic_ft6336u_write_reg_nbytes(bus, change_reg, &change_cmd, 1);
+        rt_kprintf("PRINTF:%d. Set factory mode for FT6336U chip.\r\n",Record.kprintf_cnt++);
+    }
 }
 
 
@@ -63,8 +80,14 @@ void FT6336U_READ_INFO(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
     rt_uint8_t frame_version = 0;
     rt_uint8_t vendor_id = 0;
 
+    /* 设置工作模式 */
+    FT6336U_Work_Mode_Set(bus, WORK_MODE);
+
     //--------------------------------------------------------------
-    /* 根据数据手册，进行读操作时，按照 “从机地址 + 发送标志 + 寄存器地址 ”进行第一次发送  */
+    /*! 根据数据手册，进行读操作时，按照 “从机地址 + 发送标志 + 寄存器地址 ”进行第一次发送
+     *! 读取ft6336u的芯片类型码
+     * */
+
     iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CIPHER_HIGH);
     iic_ft6336u_read_reg(bus, 1, &info_buf[0]);
 
@@ -76,43 +99,50 @@ void FT6336U_READ_INFO(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
 
     info->CPIPHER_INFO = (info_buf[0] << 16) + (info_buf[1] << 8) + info_buf[2];
     rt_kprintf("PRINTF:%d. info->CPIPHER_INFO == %x \r\n",Record.kprintf_cnt++,info->CPIPHER_INFO);
-    if(info->CPIPHER_INFO == 0xFFFF00){
-        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6236G \r\n",Record.kprintf_cnt++);
+    if(info->CPIPHER_INFO == 0x642600){
+        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6236G. \r\n",Record.kprintf_cnt++);
     }
-    else if(info->CPIPHER_INFO == 0xFFFF01){
-        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6336G \r\n",Record.kprintf_cnt++);
+    else if(info->CPIPHER_INFO == 0x642601){
+        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6336G. \r\n",Record.kprintf_cnt++);
     }
-    else if(info->CPIPHER_INFO == 0xFFFF02){
-        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6336U \r\n",Record.kprintf_cnt++);
+    else if(info->CPIPHER_INFO == 0x642602){
+        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6336U. \r\n",Record.kprintf_cnt++);
     }
-    else if(info->CPIPHER_INFO == 0xFFFF03){
-        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6426 \r\n",Record.kprintf_cnt++);
+    else if(info->CPIPHER_INFO == 0x642603){
+        rt_kprintf("PRINTF:%d. This Touch Chip Type is FT6426. \r\n",Record.kprintf_cnt++);
     }
     else{
-        rt_kprintf("PRINTF:%d. This Touch Chip Type is not found \r\n",Record.kprintf_cnt++);
+        rt_kprintf("PRINTF:%d. This Touch Chip Type is not found. \r\n",Record.kprintf_cnt++);
     }
+    rt_kprintf("\r\n");
+    //--------------------------------------------------------------
+    /*! 读取ft6336u的库版本信息
+     * */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_LIB_VERSION_H);
+    iic_ft6336u_read_reg(bus, 1, &libv_buf[0]);
 
-//    //--------------------------------------------------------------
-//    iic_ft6336u_write_reg(bus, ID_G_LIB_VERSION_H);
-//    iic_ft6336u_read_reg(bus, 1, &libv_buf[0]);
-//
-//    iic_ft6336u_write_reg(bus, ID_G_LIB_VERSION_L);
-//    iic_ft6336u_read_reg(bus, 1, &libv_buf[1]);
-//
-//    info->LIB_VERSION = (libv_buf[0] << 8) + libv_buf[1];
-//    rt_kprintf("PRINTF:%d. Touch Chip library file version is %d \r\n",Record.kprintf_cnt++,info->LIB_VERSION);
-//
-//    //--------------------------------------------------------------
-//    iic_ft6336u_write_reg(bus, ID_G_FIRMID);
-//    iic_ft6336u_read_reg(bus, 1, &frame_version);
-//    info->FIRMWARE_VERSION = frame_version;
-//    rt_kprintf("PRINTF:%d. Touch Chip frameware version is %d \r\n",Record.kprintf_cnt++,info->FIRMWARE_VERSION);
-//
-//    //--------------------------------------------------------------
-//    iic_ft6336u_write_reg(bus, ID_G_FOCALTECH_ID);
-//    iic_ft6336u_read_reg(bus, 1, &vendor_id);
-//    info->VENDOR_ID = vendor_id;
-//    rt_kprintf("PRINTF:%d. Touch Chip vendor_id is %d \r\n",Record.kprintf_cnt++,info->VENDOR_ID);
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_LIB_VERSION_L);
+    iic_ft6336u_read_reg(bus, 1, &libv_buf[1]);
+
+    info->LIB_VERSION = (libv_buf[0] << 8) + libv_buf[1];
+    rt_kprintf("PRINTF:%d. Touch Chip library file version is %x. \r\n",Record.kprintf_cnt++,info->LIB_VERSION);
+    rt_kprintf("\r\n");
+    //--------------------------------------------------------------
+    /*! 读取ft6336u的固件版本
+     * */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_FIRMID);
+    iic_ft6336u_read_reg(bus, 1, &frame_version);
+    info->FIRMWARE_VERSION = frame_version;
+    rt_kprintf("PRINTF:%d. Touch Chip frameware version is %d. \r\n",Record.kprintf_cnt++,info->FIRMWARE_VERSION);
+    rt_kprintf("\r\n");
+    //--------------------------------------------------------------
+    /*! 读取ft6336u的VENDOR ID
+     * */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_FOCALTECH_ID);
+    iic_ft6336u_read_reg(bus, 1, &vendor_id);
+    info->VENDOR_ID = vendor_id;
+    rt_kprintf("PRINTF:%d. Touch Chip vendor_id is %d \r\n",Record.kprintf_cnt++,info->VENDOR_ID);
+    rt_kprintf("\r\n");
 }
 
 
