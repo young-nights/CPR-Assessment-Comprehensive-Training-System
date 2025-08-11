@@ -12,14 +12,28 @@
 
 
 FT6336U_IC_REG ft6336u_reg = {
-        .ID_G_CIPHER_HIGH       = 0xA3, //芯片代号高字节
-        .ID_G_CIPHER_MIDE       = 0x9F, //芯片代号中字节
-        .ID_G_CIPHER_LOW        = 0xA0, //芯片代号低字节
-        .ID_G_LIB_VERSION_H     = 0xA1, //APP库文件版本高字节
-        .ID_G_LIB_VERSION_L     = 0xA2, //APP库文件版本低字节
-        .ID_G_FIRMID            = 0xA6, //固件版本
-        .ID_G_FOCALTECH_ID      = 0xA8, //VENDOR ID
-        .ID_G_FACE_DEC_MODE     = 0xB0, //近距离感应使能
+        .ID_G_CIPHER_HIGH       = 0xA3, // 读取：芯片代号高字节
+        .ID_G_CIPHER_MIDE       = 0x9F, // 读取：芯片代号中字节
+        .ID_G_CIPHER_LOW        = 0xA0, // 读取：芯片代号低字节
+        .ID_G_LIB_VERSION_H     = 0xA1, // 读取：APP库文件版本高字节
+        .ID_G_LIB_VERSION_L     = 0xA2, // 读取：APP库文件版本低字节
+        .ID_G_FIRMID            = 0xA6, // 读取：固件版本
+        .ID_G_FOCALTECH_ID      = 0xA8, // 读取：VENDOR ID
+        .TD_STATUS              = 0x02, // 读取：最大报点个数
+        .P1_XH                  = 0x03, // 读取：第一个点的X坐标高四位
+        .P1_XL                  = 0x04, // 读取：第一个点的X坐标低八位
+        .P1_YH                  = 0x05, // 读取：第一个点的Y坐标高四位
+        .P1_YL                  = 0x06, // 读取：第一个点的Y坐标低八位
+        .P2_XH                  = 0x09, // 读取：第二个点的X坐标高四位
+        .P2_XL                  = 0x0A, // 读取：第二个点的X坐标低八位
+        .P2_YH                  = 0x0B, // 读取：第二个点的Y坐标高四位
+        .P2_YL                  = 0x0C, // 读取：第二个点的Y坐标低八位
+        .ID_G_THGROUP           = 0x80, // 读取：触摸阈值寄存器指令（默认值：0xBB）
+        .ID_G_THDIFF            = 0x85, // 读取：点滤波范围阈值（默认值：0xA0）
+
+        .ID_G_FACE_DEC_MODE     = 0xB0, // 设置：近距离感应使能
+        .ID_G_CTRL              = 0x86, // 设置：monitor开关模式
+        .ID_G_TIMEENTERMONITOR  = 0x87, // 设置：没触摸进入monitor延时时间
 };
 
 
@@ -28,7 +42,7 @@ FT6336U_IC_REG ft6336u_reg = {
  * @param  void
  * @return NULL
  */
-void FT6336U_RESET(void)
+void FT6336U_Reset(void)
 {
     TOUCH_RST_SET(0);
     rt_thread_mdelay(120);
@@ -72,7 +86,7 @@ void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t mode)
  * @return NULL
  */
 FT6336U_IC_INFO ft6336u_info;
-void FT6336U_READ_INFO(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
+void FT6336U_Read_Info(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
 {
 
     rt_uint8_t info_buf[3] = { 0 };
@@ -143,14 +157,96 @@ void FT6336U_READ_INFO(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
     info->VENDOR_ID = vendor_id;
     rt_kprintf("PRINTF:%d. Touch Chip vendor_id is %d \r\n",Record.kprintf_cnt++,info->VENDOR_ID);
     rt_kprintf("\r\n");
+    //--------------------------------------------------------------
+
+
+
+
 }
 
 
 /**
- * @brief  近距离感应使能
+ * @brief  读取触摸屏触点个数
  * @param  void
- * @return NULL
+ * @return 触摸点个数
  */
+rt_uint8_t FT6336U_Read_Finger_Number(struct rt_i2c_bus_device *bus)
+{
+    static rt_uint8_t fingers = 0;
+
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.TD_STATUS);
+    iic_ft6336u_read_reg(bus, 1, &fingers);
+
+    /* 如果手指数量大于2，说明数据错误，此时认为无手指触碰 */
+    if(fingers > 2){
+        fingers = 0;
+    }
+
+    return fingers;
+}
+
+
+
+
+
+/**
+ * @brief   近距离感应使能
+ * @param   cmd: 0 --> Disable
+ *               1 --> Enable
+ * @return  NULL
+ * @note    自电容式触控芯片特有的 Hover（悬浮）/接近检测功能
+ *          当手指 尚未真正接触 TP，但已经 距离面板 1-3 mm 左右 时，FT6336U 仍能检测到电场变化，从而提前知道“有手指正在靠近”。
+ */
+void FT6336U_Hover_Detection_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
+{
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_FACE_DEC_MODE);
+    iic_ft6336u_read_reg(bus, 1, &cmd);
+}
+
+
+
+
+/**
+ * @brief   设置触控芯片的一种 “诊断/监控工作模式”使能/失能
+ * @param   cmd: 0 --> Disable
+ *               1 --> Enable
+ * @return  NULL
+ * @note    把它打开后，芯片会把 原始电容值、基线、噪声、触发阈值 等内部调试数据源源不断地通过 I²C 打印出来，供产线或研发人员做 实时观测和调参。
+ *          总结：
+ *                  Monitor 模式 = 触控芯片的“串口打印调试”开关
+ *                  ON  → 输出原始数据，便于抓错、校准灵敏度、看噪声
+ *                  OFF → 正常工作模式，只上报标准坐标事件，不做额外数据输出
+ */
+void FT6336U_Monitor_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
+{
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CTRL);
+    iic_ft6336u_read_reg(bus, 1, &cmd);
+}
+
+
+
+
+/**
+ * @brief   设置触摸芯片在手指离开屏幕多久以后，芯片才真正关掉 Monitor 诊断输出并回到正常省电模式
+ * @param   time：延时时间数据（单位：10ms）
+ * @return  NULL
+ * @note    应用场景：
+ *          · 打开 Monitor 模式 → 芯片会不断把原始电容、基线等调试数据通过 I²C 吐出来
+ *          · 数据量大、功耗高，不适合一直开着
+ *          延时设置：
+ *          ·0x00：立即退出 Monitor（只要手一离开就停）
+ *          ·0x14：手指离开后 200 ms 再停
+ *          ·0x32：手指离开后 500 ms 再停，依次类推
+ */
+void FT6336U_Monitor_Time_Set(struct rt_i2c_bus_device *bus, rt_uint8_t time)
+{
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_TIMEENTERMONITOR);
+    iic_ft6336u_read_reg(bus, 1, &time);
+}
+
+
+
+
 
 
 
