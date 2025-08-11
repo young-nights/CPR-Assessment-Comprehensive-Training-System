@@ -39,6 +39,6 @@ void ft6336u_device_init(void);
 rt_err_t iic_ft6336u_write_reg(struct rt_i2c_bus_device *bus,rt_uint8_t *i2c_reg);
 rt_err_t iic_ft6336u_write_reg_datas(struct rt_i2c_bus_device *bus,rt_uint8_t* data_buf);
 rt_err_t iic_ft6336u_read_reg(struct rt_i2c_bus_device *bus, rt_uint8_t len,rt_uint8_t* i2c_dat);
-
+rt_err_t iic_ft6336u_write_reg_nbytes(struct rt_i2c_bus_device *bus,rt_uint8_t reg,rt_uint8_t *data,rt_size_t n);
 
 #endif /* APPLICATIONS_MACBSP_INC_FT6336U_IIC_H_ */

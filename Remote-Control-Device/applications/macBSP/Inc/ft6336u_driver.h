@@ -17,7 +17,7 @@
 //FT6336U芯片相关信息结构液体
 typedef struct
 {
-    unsigned long  CPIPHER_INFO;
+    unsigned long    CPIPHER_INFO;
     uint16_t    LIB_VERSION;
     uint8_t     FIRMWARE_VERSION;
     uint8_t     VENDOR_ID;
@@ -46,6 +46,6 @@ extern FT6336U_IC_REG ft6336u_reg;
 //-----------函数声明------------------
 void FT6336U_RESET(void);
 void FT6336U_READ_INFO(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info);
-void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd);
+
 
 #endif /* APPLICATIONS_MACBSP_INC_FT6336U_DRIVER_H_ */

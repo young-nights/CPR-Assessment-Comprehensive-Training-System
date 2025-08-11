@@ -10,10 +10,13 @@
 #include "events_init.h"
 #include <stdio.h>
 #include "lvgl.h"
+#include "gui_guider.h"
+
 
 #if LV_USE_GUIDER_SIMULATOR && LV_USE_FREEMASTER
 #include "freemaster_client.h"
 #endif
+
 
 lv_ui guider_ui;
 
