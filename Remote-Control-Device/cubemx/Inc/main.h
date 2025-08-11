@@ -78,6 +78,8 @@ void MX_ADC1_Init(void);
 #define BAT_CHARG_GPIO_Port GPIOA
 #define TOUCH_RST_Pin GPIO_PIN_4
 #define TOUCH_RST_GPIO_Port GPIOA
+#define TOUCH_INT_Pin GPIO_PIN_6
+#define TOUCH_INT_GPIO_Port GPIOA
 #define LCD_DC_Pin GPIO_PIN_4
 #define LCD_DC_GPIO_Port GPIOC
 #define LCD_RST_Pin GPIO_PIN_5
@@ -86,6 +88,7 @@ void MX_ADC1_Init(void);
 #define LCD_CS_GPIO_Port GPIOB
 #define LORA_IRQ_Pin GPIO_PIN_10
 #define LORA_IRQ_GPIO_Port GPIOB
+#define LORA_IRQ_EXTI_IRQn EXTI15_10_IRQn
 #define LORA_CE_Pin GPIO_PIN_11
 #define LORA_CE_GPIO_Port GPIOB
 #define Matrixkey_Row1_Pin GPIO_PIN_12

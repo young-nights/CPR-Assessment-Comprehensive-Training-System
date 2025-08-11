@@ -34,6 +34,7 @@ FT6336U_IC_REG ft6336u_reg = {
         .ID_G_FACE_DEC_MODE     = 0xB0, // 设置：近距离感应使能
         .ID_G_CTRL              = 0x86, // 设置：monitor开关模式
         .ID_G_TIMEENTERMONITOR  = 0x87, // 设置：没触摸进入monitor延时时间
+        .ID_G_MODE              = 0xA4, // 设置：报点模式设置
 };
 
 
@@ -199,8 +200,7 @@ rt_uint8_t FT6336U_Read_Finger_Number(struct rt_i2c_bus_device *bus)
  */
 void FT6336U_Hover_Detection_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
 {
-    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_FACE_DEC_MODE);
-    iic_ft6336u_read_reg(bus, 1, &cmd);
+    iic_ft6336u_write_reg_nbytes(bus, ft6336u_reg.ID_G_FACE_DEC_MODE, &cmd, 1);
 }
 
 
@@ -219,8 +219,7 @@ void FT6336U_Hover_Detection_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
  */
 void FT6336U_Monitor_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
 {
-    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_CTRL);
-    iic_ft6336u_read_reg(bus, 1, &cmd);
+    iic_ft6336u_write_reg_nbytes(bus, ft6336u_reg.ID_G_CTRL, &cmd, 1);
 }
 
 
@@ -238,15 +237,31 @@ void FT6336U_Monitor_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd)
  *          ·0x14：手指离开后 200 ms 再停
  *          ·0x32：手指离开后 500 ms 再停，依次类推
  */
-void FT6336U_Monitor_Time_Set(struct rt_i2c_bus_device *bus, rt_uint8_t time)
+void FT6336U_Monitor_Time_Set(struct rt_i2c_bus_device *bus, rt_uint8_t time_d)
 {
-    iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_TIMEENTERMONITOR);
-    iic_ft6336u_read_reg(bus, 1, &time);
+    iic_ft6336u_write_reg_nbytes(bus, ft6336u_reg.ID_G_TIMEENTERMONITOR, &time_d, 1);
+}
+
+
+
+
+/**
+ * @brief   设置 FT6336U 的报点工作模式（ID_G_MODE）
+ * @param   mode  : 0x00 --> 轮询模式
+ *                  0x01 --> 中断模式
+ * @return  NULL
+ */
+void FT6336U_Report_FingerPoint_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t mode)
+{
+    iic_ft6336u_write_reg_nbytes(bus, ft6336u_reg.ID_G_MODE, &mode, 1);
 }
 
 
 
 
 
-
-
+/**
+ * @brief   读取触点的坐标值
+ * @param
+ * @return
+ */

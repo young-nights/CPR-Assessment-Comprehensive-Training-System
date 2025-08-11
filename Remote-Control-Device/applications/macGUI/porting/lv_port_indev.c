@@ -15,7 +15,11 @@
 /*********************
  *      DEFINES
  *********************/
-
+#define USE_TOUCHPAD    1
+#define USE_MOUSE       0
+#define USE_KEYPAD      0
+#define USE_ENCODER     0
+#define USE_BUTTON      0
 /**********************
  *      TYPEDEFS
  **********************/
@@ -23,41 +27,65 @@
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-
+#if USE_TOUCHPAD
 static void touchpad_init(void);
 static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 static bool touchpad_is_pressed(void);
 static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y);
+#endif /* USE_TOUCHPAD */
 
+#if USE_MOUSE
 static void mouse_init(void);
 static void mouse_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 static bool mouse_is_pressed(void);
 static void mouse_get_xy(lv_coord_t * x, lv_coord_t * y);
+#endif /* USE_MOUSE */
 
+#if USE_KEYPAD
 static void keypad_init(void);
 static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 static uint32_t keypad_get_key(void);
+#endif /* USE_KEYPAD */
 
+#if USE_ENCODER
 static void encoder_init(void);
 static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 static void encoder_handler(void);
+#endif /* USE_ENCODER */
 
+#if USE_BUTTON
 static void button_init(void);
 static void button_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 static int8_t button_get_pressed_id(void);
 static bool button_is_pressed(uint8_t id);
+#endif /* USE_BUTTON */
 
 /**********************
  *  STATIC VARIABLES
  **********************/
+#if USE_TOUCHPAD
 lv_indev_t * indev_touchpad;
-lv_indev_t * indev_mouse;
-lv_indev_t * indev_keypad;
-lv_indev_t * indev_encoder;
-lv_indev_t * indev_button;
+#endif /* USE_TOUCHPAD */
 
+#if USE_MOUSE
+lv_indev_t * indev_mouse;
+#endif /* USE_MOUSE */
+
+#if USE_KEYPAD
+lv_indev_t * indev_keypad;
+#endif /* USE_KEYPAD */
+
+#if USE_ENCODER
+lv_indev_t * indev_encoder;
 static int32_t encoder_diff;
 static lv_indev_state_t encoder_state;
+#endif /* USE_ENCODER */
+
+#if USE_BUTTON
+lv_indev_t * indev_button;
+#endif /* USE_BUTTON */
+
+
 
 /**********************
  *      MACROS
@@ -83,23 +111,26 @@ void lv_port_indev_init(void)
 
     static lv_indev_drv_t indev_drv;
 
+
+#if USE_TOUCHPAD
     /*------------------
      * Touchpad
      * -----------------*/
-
     /*Initialize your touchpad if you have*/
     touchpad_init();
 
     /*Register a touchpad input device*/
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_cb = touchpad_read;
-    indev_touchpad = lv_indev_drv_register(&indev_drv);
+    lv_indev_drv_init(&indev_drv);              /*! 用默认值初始化一个触摸设备 */
+    indev_drv.type = LV_INDEV_TYPE_POINTER;     /*! 选择输入设备类型（触摸）*/
+    indev_drv.read_cb = touchpad_read;          /*! 添加触摸回调函数（那些静态函数就是通过这样回调的方式来使用的，函数指针的一种用法） */
+    indev_touchpad = lv_indev_drv_register(&indev_drv); /*! 注册触摸设备 */
+#endif /* USE_TOUCHPAD */
 
+
+#if USE_MOUSE
     /*------------------
      * Mouse
      * -----------------*/
-
     /*Initialize your mouse if you have*/
     mouse_init();
 
@@ -113,7 +144,10 @@ void lv_port_indev_init(void)
     lv_obj_t * mouse_cursor = lv_img_create(lv_scr_act());
     lv_img_set_src(mouse_cursor, LV_SYMBOL_HOME);
     lv_indev_set_cursor(indev_mouse, mouse_cursor);
+#endif /* USE_MOUSE */
 
+
+#if USE_KEYPAD
     /*------------------
      * Keypad
      * -----------------*/
@@ -131,7 +165,11 @@ void lv_port_indev_init(void)
      *add objects to the group with `lv_group_add_obj(group, obj)`
      *and assign this input device to group to navigate in it:
      *`lv_indev_set_group(indev_keypad, group);`*/
+#endif /* USE_KEYPAD */
 
+
+
+#if USE_ENCODER
     /*------------------
      * Encoder
      * -----------------*/
@@ -149,7 +187,10 @@ void lv_port_indev_init(void)
      *add objects to the group with `lv_group_add_obj(group, obj)`
      *and assign this input device to group to navigate in it:
      *`lv_indev_set_group(indev_encoder, group);`*/
+#endif /* USE_ENCODER */
 
+
+#if USE_BUTTON
     /*------------------
      * Button
      * -----------------*/
@@ -169,12 +210,16 @@ void lv_port_indev_init(void)
         {40, 100},  /*Button 1 -> x:40; y:100*/
     };
     lv_indev_set_button_points(indev_button, btn_points);
+#endif /* USE_BUTTON */
+
+
 }
 
 /**********************
  *   STATIC FUNCTIONS
  **********************/
 
+#if USE_TOUCHPAD
 /*------------------
  * Touchpad
  * -----------------*/
@@ -183,6 +228,8 @@ void lv_port_indev_init(void)
 static void touchpad_init(void)
 {
     /*Your code comes here*/
+
+
 }
 
 /*Will be called by the library to read the touchpad*/
@@ -222,6 +269,10 @@ static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
     (*y) = 0;
 }
 
+#endif /* USE_TOUCHPAD */
+
+
+#if USE_MOUSE
 /*------------------
  * Mouse
  * -----------------*/
@@ -263,7 +314,10 @@ static void mouse_get_xy(lv_coord_t * x, lv_coord_t * y)
     (*x) = 0;
     (*y) = 0;
 }
+#endif /* USE_MOUSE */
 
+
+#if USE_KEYPAD
 /*------------------
  * Keypad
  * -----------------*/
@@ -322,7 +376,11 @@ static uint32_t keypad_get_key(void)
 
     return 0;
 }
+#endif /* USE_KEYPAD */
 
+
+
+#if USE_ENCODER
 /*------------------
  * Encoder
  * -----------------*/
@@ -349,7 +407,10 @@ static void encoder_handler(void)
     encoder_diff += 0;
     encoder_state = LV_INDEV_STATE_REL;
 }
+#endif /* USE_ENCODER */
 
+
+#if USE_BUTTON
 /*------------------
  * Button
  * -----------------*/
@@ -406,6 +467,8 @@ static bool button_is_pressed(uint8_t id)
 
     return false;
 }
+#endif /* USE_BUTTON */
+
 
 #else /*Enable this file at the top*/
 

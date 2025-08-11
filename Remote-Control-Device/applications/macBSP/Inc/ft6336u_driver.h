@@ -49,7 +49,7 @@ typedef struct
     uint8_t  ID_G_CTRL;             // 设置：monitor开关模式
     uint8_t  ID_G_THDIFF;           // 读取：点滤波范围阈值（默认值：0xA0）
     uint8_t  ID_G_TIMEENTERMONITOR; // 设置：没触摸进入monitor延时时间
-
+    uint8_t  ID_G_MODE;             // 设置：报点INT模式（默认：中断触发）
 
 }FT6336U_IC_REG;
 extern FT6336U_IC_REG ft6336u_reg;
@@ -59,13 +59,13 @@ extern FT6336U_IC_REG ft6336u_reg;
 
 
 //-----------函数声明------------------
-void FT6336U_Reser(void);
+void FT6336U_Reset(void);
 void FT6336U_Work_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t mode);
 void FT6336U_Read_Info(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info);
 rt_uint8_t FT6336U_Read_Finger_Number(struct rt_i2c_bus_device *bus);
 void FT6336U_Hover_Detection_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd);
 void FT6336U_Monitor_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd);
-
-
+void FT6336U_Monitor_Time_Set(struct rt_i2c_bus_device *bus, rt_uint8_t time_d);
+void FT6336U_Report_FingerPoint_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t mode);
 
 #endif /* APPLICATIONS_MACBSP_INC_FT6336U_DRIVER_H_ */

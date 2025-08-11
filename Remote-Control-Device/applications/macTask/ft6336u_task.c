@@ -11,6 +11,9 @@
 
 
 
+
+
+
 /**
   * @brief  This thread entry is used for touch check
   * @retval void
@@ -19,16 +22,12 @@ void FT6336U_Thread_entry(void* parameter)
 {
 
 
-    FT6336U_RESET();
+    FT6336U_Reset();
     ft6336u_device_init();
-    FT6336U_READ_INFO(ft6336u_iic.i2c_bus, &ft6336u_info);
+    FT6336U_Read_Info(ft6336u_iic.i2c_bus, &ft6336u_info);
 
     for(;;)
     {
-        /* 实时读取手指触点个数 */
-        rt_uint8_t fingers = FT6336U_READ_FINGER_NUMBER(ft6336u_iic.i2c_bus);
-
-
 
 
         rt_thread_mdelay(10);
