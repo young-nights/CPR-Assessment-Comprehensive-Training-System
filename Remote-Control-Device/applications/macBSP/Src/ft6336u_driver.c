@@ -140,7 +140,7 @@ void FT6336U_Read_Info(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
     iic_ft6336u_read_reg(bus, 1, &libv_buf[1]);
 
     info->LIB_VERSION = (libv_buf[0] << 8) + libv_buf[1];
-    rt_kprintf("PRINTF:%d. Touch Chip library file version is %x. \r\n",Record.kprintf_cnt++,info->LIB_VERSION);
+    rt_kprintf("PRINTF:%d. Touch Chip library file version is 0x%02x. \r\n",Record.kprintf_cnt++,info->LIB_VERSION);
     rt_kprintf("\r\n");
     //--------------------------------------------------------------
     /*! 读取ft6336u的固件版本
@@ -148,7 +148,7 @@ void FT6336U_Read_Info(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
     iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_FIRMID);
     iic_ft6336u_read_reg(bus, 1, &frame_version);
     info->FIRMWARE_VERSION = frame_version;
-    rt_kprintf("PRINTF:%d. Touch Chip frameware version is %d. \r\n",Record.kprintf_cnt++,info->FIRMWARE_VERSION);
+    rt_kprintf("PRINTF:%d. Touch Chip frameware version is 0x%02x. \r\n",Record.kprintf_cnt++,info->FIRMWARE_VERSION);
     rt_kprintf("\r\n");
     //--------------------------------------------------------------
     /*! 读取ft6336u的VENDOR ID
@@ -156,7 +156,7 @@ void FT6336U_Read_Info(struct rt_i2c_bus_device *bus,FT6336U_IC_INFO *info)
     iic_ft6336u_write_reg(bus, &ft6336u_reg.ID_G_FOCALTECH_ID);
     iic_ft6336u_read_reg(bus, 1, &vendor_id);
     info->VENDOR_ID = vendor_id;
-    rt_kprintf("PRINTF:%d. Touch Chip vendor_id is %d \r\n",Record.kprintf_cnt++,info->VENDOR_ID);
+    rt_kprintf("PRINTF:%d. Touch Chip vendor_id is 0x%02x \r\n",Record.kprintf_cnt++,info->VENDOR_ID);
     rt_kprintf("\r\n");
     //--------------------------------------------------------------
 
@@ -265,3 +265,62 @@ void FT6336U_Report_FingerPoint_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8
  * @param
  * @return
  */
+ft6336u_xy tp_dev_xy;
+rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
+{
+    rt_uint8_t coord[4] = {0};        /* 坐标临时缓存区 */
+
+    /* 1. 如果没有报点，或者报点异常就不处理坐标 */
+    if(Record.touch_fingers == 0 || Record.touch_fingers > 2){
+        tp_dev_xy.point1_x  = 0;
+        tp_dev_xy.point1_y  = 0;
+        tp_dev_xy.point2_x  = 0;
+        tp_dev_xy.point2_y  = 0;
+        return RT_FALSE;
+    }
+
+    /* 2. 读第 1 点高4位X坐标寄存器：0x03 */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.P1_XH);
+    iic_ft6336u_read_reg(bus, 1, &coord[0]);
+
+    /* 3. 读第 1 点低8位X坐标寄存器：0x04 */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.P1_XL);
+    iic_ft6336u_read_reg(bus, 1, &coord[1]);
+
+    tp_dev_xy.point1_x = ((coord[0] & 0x0F) << 8) | coord[1] ;
+    rt_kprintf("PRINTF:%d. tp_dev_xy.point1_x = 0x%04x\r\n",tp_dev_xy.point1_x);
+
+    /* 4. 读第 1 点高4位Y坐标寄存器：0x05 */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.P1_YH);
+    iic_ft6336u_read_reg(bus, 1, &coord[2]);
+
+    /* 5. 读第 1 点低8位Y坐标寄存器：0x06 */
+    iic_ft6336u_write_reg(bus, &ft6336u_reg.P1_YL);
+    iic_ft6336u_read_reg(bus, 1, &coord[3]);
+
+    tp_dev_xy.point1_y = ((coord[2] & 0x0F) << 8) | coord[3] ;
+    rt_kprintf("PRINTF:%d. tp_dev_xy.point1_y = 0x%04x\r\n",tp_dev_xy.point1_y);
+
+    /* 6. 若还有第 2 点，再读 0x09~0x0C(可选) */
+    if (Record.touch_fingers == 2)
+    {
+        rt_uint8_t coord_xy[4] = {0};
+        rt_uint8_t reg = ft6336u_reg.P2_XH;
+        struct rt_i2c_msg msgs[2] = {
+            { .addr = ft6336u_iic.i2c_addr, .flags = RT_I2C_WR, .buf = &reg,  .len = 1 },
+            { .addr = ft6336u_iic.i2c_addr, .flags = RT_I2C_RD, .buf = coord_xy, .len = 4 }
+        };
+        if (rt_i2c_transfer(bus, msgs, 2) != 2){
+            return RT_FALSE;
+        }
+        tp_dev_xy.point2_x = ((coord_xy[0] & 0x0F) << 8) | coord_xy[1];
+        tp_dev_xy.point2_y = ((coord_xy[2] & 0x0F) << 8) | coord_xy[3];
+        rt_kprintf("PRINTF:%d. tp_dev_xy.point2_x = 0x%04x\r\n",tp_dev_xy.point1_x);
+        rt_kprintf("PRINTF:%d. tp_dev_xy.point2_y = 0x%04x\r\n",tp_dev_xy.point1_y);
+    }
+
+    return RT_TRUE;
+}
+
+
+

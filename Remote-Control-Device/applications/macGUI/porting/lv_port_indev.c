@@ -11,7 +11,7 @@
  *********************/
 #include "lv_port_indev.h"
 #include "lvgl.h"
-
+#include "bsp_typedef.h"
 /*********************
  *      DEFINES
  *********************/
@@ -256,7 +256,9 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 static bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
-
+    if(Record.touch_down && Record.touch_fingers){
+        return true;
+    }
     return false;
 }
 
@@ -264,6 +266,7 @@ static bool touchpad_is_pressed(void)
 static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 {
     /*Your code comes here*/
+
 
     (*x) = 0;
     (*y) = 0;
