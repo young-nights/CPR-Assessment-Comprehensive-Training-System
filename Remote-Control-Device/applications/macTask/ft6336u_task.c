@@ -20,7 +20,6 @@ static void FT6336U_INT_Callback(void *args)
     {
         /* 下降沿：手指按下 */
         Record.touch_down = 1;
-//        ft6336u_read_once();   // 读坐标
     }
     else
     {

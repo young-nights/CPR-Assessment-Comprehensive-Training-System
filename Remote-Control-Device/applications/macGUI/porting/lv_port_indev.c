@@ -256,9 +256,11 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 static bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
-    if(Record.touch_down && Record.touch_fingers){
+    if( Record.touch_fingers){
+        rt_kprintf("Pressed!!!\r\n");
         return true;
     }
+
     return false;
 }
 
@@ -267,9 +269,8 @@ static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 {
     /*Your code comes here*/
 
-
-    (*x) = 0;
-    (*y) = 0;
+    (*x) = tp_dev_xy.point1_x;
+    (*y) = tp_dev_xy.point1_y;
 }
 
 #endif /* USE_TOUCHPAD */
