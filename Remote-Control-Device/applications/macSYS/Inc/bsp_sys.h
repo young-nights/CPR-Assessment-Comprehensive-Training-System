@@ -47,7 +47,8 @@
 #include "gui_guider.h"
 #include "lvgl_gui.h"
 #include "lv_port_disp.h"
-
+#include "events_init.h"
+#include "lv_port_indev.h"
 
 // 这个宏用于使能lv_printf.c文件中的lv_snprintf()函数
 #define USE_LV_SNPRINTF     0

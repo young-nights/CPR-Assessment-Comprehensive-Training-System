@@ -18,8 +18,11 @@
 void GUI_Thread_entry(void* parameter)
 {
     lv_init();
+
     lv_port_disp_init();
+    lv_port_indev_init();
     lv_user_gui_init();
+
     for(;;)
     {
         rt_thread_mdelay(10);

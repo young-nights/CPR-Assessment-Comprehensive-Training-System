@@ -34,7 +34,8 @@ typedef struct {
     rt_uint8_t  StrengLevel;                     // 能量等级
     rt_uint16_t RealPluseTime;                   // 实际的脉冲时间
     rt_uint16_t IFWorking;                       // 是否处于工作状态
-
+    rt_uint8_t  touch_down;                      // 触摸按下标志
+    rt_uint8_t  touch_fingers;                   // 触摸报点数
 
 }RecordStruct;
 extern RecordStruct Record;

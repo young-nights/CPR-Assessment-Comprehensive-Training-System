@@ -15,6 +15,7 @@ void lv_user_gui_init(void)
 {
     extern void setup_ui(lv_ui *ui);
     setup_ui(&gui_guider_lvgl);
+    events_init(&gui_guider_lvgl);
 }
 
 

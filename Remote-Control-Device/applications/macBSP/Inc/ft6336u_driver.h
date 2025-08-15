@@ -10,7 +10,7 @@
 #ifndef APPLICATIONS_MACBSP_INC_FT6336U_DRIVER_H_
 #define APPLICATIONS_MACBSP_INC_FT6336U_DRIVER_H_
 #include "bsp_sys.h"
-
+#include "lv_area.h"
 
 
 
@@ -24,6 +24,16 @@ typedef struct
 }FT6336U_IC_INFO;
 extern FT6336U_IC_INFO ft6336u_info;
 
+
+
+//FT6336U芯片坐标点信息
+typedef struct{
+    lv_coord_t point1_x;
+    lv_coord_t point1_y;
+    lv_coord_t point2_x;
+    lv_coord_t point2_y;
+}ft6336u_xy;
+extern ft6336u_xy tp_dev_xy;
 
 //-----------寄存器定义------------------
 typedef struct
@@ -67,5 +77,7 @@ void FT6336U_Hover_Detection_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd);
 void FT6336U_Monitor_Set(struct rt_i2c_bus_device *bus, rt_uint8_t cmd);
 void FT6336U_Monitor_Time_Set(struct rt_i2c_bus_device *bus, rt_uint8_t time_d);
 void FT6336U_Report_FingerPoint_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8_t mode);
+rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus);
+
 
 #endif /* APPLICATIONS_MACBSP_INC_FT6336U_DRIVER_H_ */
