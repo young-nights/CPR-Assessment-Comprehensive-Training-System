@@ -225,7 +225,11 @@ void lv_scr_load_anim(lv_obj_t * new_scr, lv_scr_load_anim_t anim_type, uint32_t
     lv_obj_t * act_scr = lv_scr_act();
 
     if(act_scr == new_scr || d->scr_to_load == new_scr) {
+        rt_kprintf("act_scr == new_scr\r\n");
         return;
+    }
+    else{
+        rt_kprintf("act_scr != new_scr\r\n");
     }
 
     /*If an other screen load animation is in progress

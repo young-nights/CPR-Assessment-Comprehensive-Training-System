@@ -241,9 +241,11 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     /*Save the pressed coordinates and the state*/
     if(touchpad_is_pressed()) {
         touchpad_get_xy(&last_x, &last_y);
+        rt_kprintf("LV_INDEV_STATE_PR\r\n");
         data->state = LV_INDEV_STATE_PR;    /* 报告“按下” */
     }
     else {
+//        rt_kprintf("LV_INDEV_STATE_REL\r\n");
         data->state = LV_INDEV_STATE_REL;   /* 报告“释放”——必须！ */
     }
 
