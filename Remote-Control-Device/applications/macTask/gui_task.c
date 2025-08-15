@@ -39,8 +39,7 @@ void GUI_Thread_entry(void* parameter)
 rt_thread_t GUI_Task_Handle = RT_NULL;
 int GUI_Thread_Init(void)
 {
-    /* 创建检查一些系统状态标志的线程  -- 优先级：25 */
-    GUI_Task_Handle = rt_thread_create("GUI_Thread_entry", GUI_Thread_entry, RT_NULL, 4096, 10, 20);
+    GUI_Task_Handle = rt_thread_create("GUI_Thread_entry", GUI_Thread_entry, RT_NULL, 4096, 10, 300);
     /* 检查是否创建成功,成功就启动线程 */
     if(GUI_Task_Handle != RT_NULL)
     {
