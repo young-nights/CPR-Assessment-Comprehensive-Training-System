@@ -268,10 +268,10 @@ void FT6336U_Report_FingerPoint_Mode_Set(struct rt_i2c_bus_device *bus, rt_uint8
 ft6336u_xy tp_dev_xy;
 rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
 {
-    rt_uint8_t coord[4] = {0};        /* 坐标临时缓存区 */
+    rt_uint8_t coord[4] = {0};          /* 坐标临时缓存区 */
 
     /* 1. 如果没有报点，或者报点异常就不处理坐标 */
-    if(Record.touch_fingers == 0 || Record.touch_fingers > 2){
+    if(Record.touch_fingers > 2){
         tp_dev_xy.point1_x  = 0;
         tp_dev_xy.point1_y  = 0;
         tp_dev_xy.point2_x  = 0;
@@ -282,6 +282,7 @@ rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
     /* 2. 读第 1 点高4位X坐标寄存器：0x03 */
     iic_ft6336u_write_reg(bus, &ft6336u_reg.P1_XH);
     iic_ft6336u_read_reg(bus, 1, &coord[0]);
+    rt_kprintf("PRINTF:%d. coord[0] = 0x%02x\r\n",Record.kprintf_cnt,coord[0]);
 
     /* 3. 读第 1 点低8位X坐标寄存器：0x04 */
     iic_ft6336u_write_reg(bus, &ft6336u_reg.P1_XL);
@@ -289,7 +290,7 @@ rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
 
     tp_dev_xy.point1_x = ((coord[0] & 0x0F) << 8) | coord[1] ;
 #if USE_PRINTF_POINT_XY
-    rt_kprintf("PRINTF:%d. tp_dev_xy.point1_x = 0x%04x\r\n",tp_dev_xy.point1_x);
+    rt_kprintf("PRINTF:%d. tp_dev_xy.point1_x = 0x%04x\r\n",Record.kprintf_cnt,tp_dev_xy.point1_x);
 #endif
 
     /* 4. 读第 1 点高4位Y坐标寄存器：0x05 */
@@ -302,7 +303,7 @@ rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
 
     tp_dev_xy.point1_y = ((coord[2] & 0x0F) << 8) | coord[3] ;
 #if USE_PRINTF_POINT_XY
-    rt_kprintf("PRINTF:%d. tp_dev_xy.point1_y = 0x%04x\r\n",tp_dev_xy.point1_y);
+    rt_kprintf("PRINTF:%d. tp_dev_xy.point1_y = 0x%04x\r\n",Record.kprintf_cnt, tp_dev_xy.point1_y);
 #endif
 
     /* 6. 若还有第 2 点，再读 0x09~0x0C(可选) */
@@ -320,7 +321,7 @@ rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
 
         tp_dev_xy.point2_x = ((coord_xy[0] & 0x0F) << 8) | coord_xy[1] ;
 #if USE_PRINTF_POINT_XY
-        rt_kprintf("PRINTF:%d. tp_dev_xy.point2_x = 0x%04x\r\n",tp_dev_xy.point2_x);
+        rt_kprintf("PRINTF:%d. tp_dev_xy.point2_x = 0x%04x\r\n",Record.kprintf_cnt, tp_dev_xy.point2_x);
 #endif
 
         /* 9. 读第 2 点高4位Y坐标寄存器：0x0B */
@@ -333,7 +334,7 @@ rt_err_t FT6336U_Read_Pressed_Point_xy(struct rt_i2c_bus_device *bus)
 
         tp_dev_xy.point2_y = ((coord_xy[2] & 0x0F) << 8) | coord_xy[3] ;
 #if USE_PRINTF_POINT_XY
-        rt_kprintf("PRINTF:%d. tp_dev_xy.point2_y = 0x%04x\r\n",tp_dev_xy.point2_y);
+        rt_kprintf("PRINTF:%d. tp_dev_xy.point2_y = 0x%04x\r\n",Record.kprintf_cnt, tp_dev_xy.point2_y);
 #endif
     }
 

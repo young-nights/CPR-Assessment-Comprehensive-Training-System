@@ -9,23 +9,29 @@
  */
 #include "bsp_sys.h"
 
+
+#define USE_EXTI_FUNC 1
+
+#if USE_EXTI_FUNC
 /**
   * @brief  FT6336U的INT引脚的中断回调函数
   * @retval void
   */
 static void FT6336U_INT_Callback(void *args)
 {
-    /* 读取当前 INT 引脚电平 */
-    if (rt_pin_read(GET_PIN(A,6)) == PIN_LOW)
-    {
+
+    rt_interrupt_enter();
+
+    if (rt_pin_read(GET_PIN(A,6)) == PIN_LOW){
         /* 下降沿：手指按下 */
-        Record.touch_down = 1;
+        Record.touch_down_flag = 1;
     }
-    else
-    {
+    else{
         /* 上升沿：手指离开 */
-        Record.touch_down = 0;
+        Record.touch_down_flag = 0;
     }
+
+    rt_interrupt_leave();
 }
 
 
@@ -47,6 +53,7 @@ static int FT6336U_INT_GPIO_Config(void)
 }
 INIT_APP_EXPORT(FT6336U_INT_GPIO_Config);
 
+#endif /* USE_EXTI_FUNC */
 
 
 /**
@@ -65,7 +72,16 @@ void FT6336U_Thread_entry(void* parameter)
     {
 
         Record.touch_fingers = FT6336U_Read_Finger_Number(ft6336u_iic.i2c_bus);
-        FT6336U_Read_Pressed_Point_xy(ft6336u_iic.i2c_bus);
+        /* 有中断事件才读寄存器 */
+        if (Record.touch_down_flag == 1){
+            FT6336U_Read_Pressed_Point_xy(ft6336u_iic.i2c_bus);
+            Record.touch_down_flag = 2;
+        }
+        else if(Record.touch_down_flag == 0){
+            Record.touch_down_flag = 0;
+            Record.touch_fingers = 0;
+        }
+
         rt_thread_mdelay(10);
     }
 
@@ -81,7 +97,6 @@ void FT6336U_Thread_entry(void* parameter)
 int FT6336U_Thread_Init(void)
 {
     rt_thread_t FT6336U_Task_Handle = RT_NULL;
-    /* 创建检查一些系统状态标志的线程  -- 优先级：25 */
     FT6336U_Task_Handle = rt_thread_create("FT6336U_Thread_entry", FT6336U_Thread_entry, RT_NULL, 1024, 25, 300);
     /* 检查是否创建成功,成功就启动线程 */
     if(FT6336U_Task_Handle != RT_NULL)

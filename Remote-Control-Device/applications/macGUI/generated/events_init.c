@@ -10,8 +10,6 @@
 #include "events_init.h"
 #include <stdio.h>
 #include "lvgl.h"
-#include "gui_guider.h"
-
 
 #if LV_USE_GUIDER_SIMULATOR && LV_USE_FREEMASTER
 #include "freemaster_client.h"
@@ -24,9 +22,10 @@ static void screen_btn_1_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
-    case LV_EVENT_CLICKED:
+    case LV_EVENT_PRESSED:
     {
-        ui_load_scr_animation(&guider_ui, &guider_ui.screen_1, guider_ui.screen_1_del, &guider_ui.screen_del, setup_scr_screen_1, LV_SCR_LOAD_ANIM_FADE_ON, 100, 50, false, true);
+        rt_kprintf("screen_btn_1_event_handler\r\n ");
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen_1, guider_ui.screen_1_del, &guider_ui.screen_del, setup_scr_screen_1, LV_SCR_LOAD_ANIM_FADE_ON, 100, 50, true, true);
         break;
     }
     default:
@@ -37,6 +36,26 @@ static void screen_btn_1_event_handler (lv_event_t *e)
 void events_init_screen (lv_ui *ui)
 {
     lv_obj_add_event_cb(ui->screen_btn_1, screen_btn_1_event_handler, LV_EVENT_ALL, ui);
+}
+
+static void screen_1_btn_1_event_handler (lv_event_t *e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    switch (code) {
+    case LV_EVENT_PRESSED:
+    {
+        rt_kprintf("screen_1_btn_1_event_handler\r\n ");
+        ui_load_scr_animation(&guider_ui, &guider_ui.screen, guider_ui.screen_del, &guider_ui.screen_1_del, setup_scr_screen, LV_SCR_LOAD_ANIM_FADE_ON, 200, 50, true, true);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void events_init_screen_1 (lv_ui *ui)
+{
+    lv_obj_add_event_cb(ui->screen_1_btn_1, screen_1_btn_1_event_handler, LV_EVENT_ALL, ui);
 }
 
 

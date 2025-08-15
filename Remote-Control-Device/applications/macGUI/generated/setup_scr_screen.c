@@ -77,7 +77,7 @@ void setup_scr_screen(lv_ui *ui)
 
     //Write codes screen_lab
     ui->screen_lab = lv_label_create(ui->screen_cont_1);
-    lv_label_set_text(ui->screen_lab, "心肺复苏模拟人遥控器");
+    lv_label_set_text(ui->screen_lab, "TEST");
     lv_label_set_long_mode(ui->screen_lab, LV_LABEL_LONG_WRAP);
     lv_obj_set_pos(ui->screen_lab, 35, 33);
     lv_obj_set_size(ui->screen_lab, 175, 60);

@@ -241,10 +241,10 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     /*Save the pressed coordinates and the state*/
     if(touchpad_is_pressed()) {
         touchpad_get_xy(&last_x, &last_y);
-        data->state = LV_INDEV_STATE_PR;
+        data->state = LV_INDEV_STATE_PR;    /* 报告“按下” */
     }
     else {
-        data->state = LV_INDEV_STATE_REL;
+        data->state = LV_INDEV_STATE_REL;   /* 报告“释放”——必须！ */
     }
 
     /*Set the last pressed coordinates*/
@@ -256,8 +256,7 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 static bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
-    if( Record.touch_fingers){
-        rt_kprintf("Pressed!!!\r\n");
+    if( Record.touch_down_flag && Record.touch_fingers){
         return true;
     }
 
