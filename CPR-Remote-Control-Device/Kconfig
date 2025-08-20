@@ -18,7 +18,7 @@ config PKGS_DIR
 config PLATFORM_DIR
     string
     option env="PLATFORM_DIR"
-    default "D:/RT-ThreadStudio/workspace/CPR-Remote-Control-Device_Ver2.0/platform"
+    default "D:/RT-ThreadStudio/item_workspace/CPR_Device_Ver2.0/CPR-Remote-Control-Device/platform"
 
 source "$RTT_DIR/Kconfig"
 source "$PKGS_DIR/Kconfig"

@@ -9,6 +9,7 @@
  */
 
 #include <rtthread.h>
+#include "bsp_sys.h"
 
 /**
   * @brief  The application entry point.

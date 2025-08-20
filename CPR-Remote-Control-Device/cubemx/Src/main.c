@@ -53,7 +53,6 @@ UART_HandleTypeDef huart1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -392,6 +391,9 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, LCD_CS_Pin|LORA_CE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SRAM_HOLD_GPIO_Port, SRAM_HOLD_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SRAM_CS_GPIO_Port, SRAM_CS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : LED_GREEN_Pin LCD_RST_Pin Matrixkey_Column1_Pin Matrixkey_Column2_Pin
@@ -449,6 +451,13 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(LCD_CS_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SRAM_HOLD_Pin */
+  GPIO_InitStruct.Pin = SRAM_HOLD_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(SRAM_HOLD_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LORA_IRQ_Pin */
   GPIO_InitStruct.Pin = LORA_IRQ_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
@@ -495,8 +504,6 @@ void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
-
-
 
 #ifdef  USE_FULL_ASSERT
 /**

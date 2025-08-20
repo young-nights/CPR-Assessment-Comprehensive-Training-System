@@ -19,9 +19,22 @@ extern struct rt_spi_device *spi_dev_sram;
 #define     SRAM_CS_PIN      SRAM_CS_Pin
 
 #define     SRAM_CS_SET(bit) if(bit) \
-                             HAL_GPIO_WritePin ( SRAM_CS_PORT, SRAM_CS_PIN , GPIO_PIN_SET )\
+                             HAL_GPIO_WritePin ( SRAM_CS_PORT, SRAM_CS_PIN , GPIO_PIN_SET );\
                              else \
-                             HAL_GPIO_WritePin ( SRAM_CS_PORT, SRAM_CS_PIN , GPIO_PIN_RESET )
+                             HAL_GPIO_WritePin ( SRAM_CS_PORT, SRAM_CS_PIN , GPIO_PIN_RESET );
+
+
+/* HOLD引脚 -- HOLD */
+#define     SRAM_HOLD_PORT     SRAM_HOLD_GPIO_Port
+#define     SRAM_HOLD_PIN      SRAM_HOLD_Pin
+
+#define     SRAM_HOLD_SET(bit) if(bit) \
+                               HAL_GPIO_WritePin ( SRAM_HOLD_PORT, SRAM_HOLD_PIN , GPIO_PIN_SET );\
+                               else \
+                               HAL_GPIO_WritePin ( SRAM_HOLD_PORT, SRAM_HOLD_PIN , GPIO_PIN_RESET );
+
+
+
 
 
 

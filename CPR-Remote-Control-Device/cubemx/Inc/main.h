@@ -62,6 +62,7 @@ void MX_ADC1_Init(void);
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
+
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
@@ -90,6 +91,8 @@ void MX_ADC1_Init(void);
 #define LCD_RST_GPIO_Port GPIOC
 #define LCD_CS_Pin GPIO_PIN_0
 #define LCD_CS_GPIO_Port GPIOB
+#define SRAM_HOLD_Pin GPIO_PIN_2
+#define SRAM_HOLD_GPIO_Port GPIOB
 #define LORA_IRQ_Pin GPIO_PIN_10
 #define LORA_IRQ_GPIO_Port GPIOB
 #define LORA_IRQ_EXTI_IRQn EXTI15_10_IRQn
