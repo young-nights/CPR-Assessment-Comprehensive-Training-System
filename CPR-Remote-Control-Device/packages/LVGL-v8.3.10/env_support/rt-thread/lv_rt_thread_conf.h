@@ -16,6 +16,19 @@
 #define LV_RTTHREAD_INCLUDE <rtthread.h>
 #include LV_RTTHREAD_INCLUDE
 
+
+/*====================
+   COLOR SETTINGS
+ *====================*/
+
+/*Color depth: 1 (1 byte per pixel), 8 (RGB332), 16 (RGB565), 32 (ARGB8888)*/
+#define LV_COLOR_DEPTH 16
+
+/*Swap the 2 bytes of RGB565 color. Useful if the display has an 8-bit interface (e.g. SPI)*/
+#define LV_COLOR_16_SWAP 1
+
+
+
 /*=========================
    MEMORY SETTINGS
  *=========================*/
