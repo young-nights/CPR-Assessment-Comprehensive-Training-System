@@ -36,6 +36,25 @@ extern struct rt_spi_device *spi_dev_sram;
 
 
 
+/* 工作模式位定义 */
+typedef enum {
+    SRAM_MODE_BYTE      = 0x00, /* 00b : Byte 模式      */
+    SRAM_MODE_SEQUENTIAL= 0x40, /* 01b : Sequential 模式*/
+    SRAM_MODE_PAGE      = 0x80  /* 10b : Page 模式      */
+}sram_mode_t;
+
+
+
+void sram_spi_init(void);
+rt_err_t sram_set_mode(sram_mode_t mode);
+sram_mode_t sram_get_mode(void);
+rt_err_t sram_write_byte(rt_uint32_t addr, rt_uint8_t byte);
+rt_uint8_t sram_read_byte(rt_uint32_t addr);
+rt_size_t sram_write_sequence(rt_uint32_t addr, const rt_uint8_t *buf, rt_size_t len);
+rt_size_t sram_read_sequence(rt_uint32_t addr, rt_uint8_t *buf, rt_size_t len);
+rt_size_t sram_write_page(rt_uint32_t addr, const rt_uint8_t *buf, rt_size_t len);
+rt_size_t sram_read_page(rt_uint32_t addr, rt_uint8_t *buf, rt_size_t len);
+
 
 
 #endif /* APPLICATIONS_MACBSP_INC_23LC1024_SRAM_SPI_H_ */
