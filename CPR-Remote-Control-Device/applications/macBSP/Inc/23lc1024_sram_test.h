@@ -13,7 +13,10 @@
 
 
 
-
+void sram_test_byte(void);
+void sram_test_full_range(void);
+void sram_test_mode(void);
+void sram_test_page_wrap(void);
 
 
 

@@ -36,7 +36,8 @@
 #include "st7789_spi.h"
 #include "bsp_battery.h"
 #include "bsp_lora_spi.h"
-
+#include "23lc1024_sram_spi.h"
+#include "23lc1024_sram_test.h"
 
 /* macSYS 头文件 */
 #include "bsp_typedef.h"
