@@ -41,6 +41,10 @@
 #  define LV_MEM_CUSTOM_REALLOC rt_realloc
 #endif
 
+
+
+
+
 /*====================
    HAL SETTINGS
  *====================*/
