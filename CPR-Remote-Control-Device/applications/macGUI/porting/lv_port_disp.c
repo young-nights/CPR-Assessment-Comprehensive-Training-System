@@ -15,13 +15,9 @@
     #define MY_DISP_VER_RES    320
 #endif
 
-// 定义外部 SRAM 缓冲地址，由于23lc1024没有FMC映射地址，因此采用虚拟内存
-#define LV_DRAW_BUF_ADDR1       0x00000
-#define LV_DRAW_BUF_ADDR2       0x012C0  // 10行 * 240宽 * 2字节 = 4800字节 = 0x12C0
 // 使用内部RAM作为图形缓冲区
-#define USE_INTERNAL_RAM        0
-// 使用外部RAM作为图形缓冲区
-#define USE_EXTERNAL_RAM        1
+#define USE_INTERNAL_RAM        1
+
 /**********************
  *  STATIC PROTOTYPES
  **********************/
@@ -93,11 +89,6 @@ void lv_port_disp_init(void)
     static lv_color_t buf_2_1[MY_DISP_HOR_RES * 10];                        /*A buffer for 10 rows*/
     static lv_color_t buf_2_2[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
 #endif
-#if USE_EXTERNAL_RAM
-    // 使用外部 SRAM 作为 draw buffer
-    static lv_color_t *buf_2_1 = (lv_color_t *)LV_DRAW_BUF_ADDR1;
-    static lv_color_t *buf_2_2 = (lv_color_t *)LV_DRAW_BUF_ADDR2;
-#endif
     lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
     #endif
 
@@ -156,29 +147,15 @@ static void disp_init(void)
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
 
-    uint32_t width = area->x2 - area->x1 + 1;
-    uint32_t height = area->y2 - area->y1 + 1;
-    uint32_t pixel_count = width * height;
-
-    // 开辟一个外部sram的缓冲区，返回首地址指针
-    uint8_t *sram_buf = (uint8_t *)LV_MEM_CUSTOM_ALLOC(pixel_count * 2);
-    if (!sram_buf) return;
-
-    sram_read_sequence((uint32_t)color_p, sram_buf, pixel_count * 2);
-
-    // 写入 LCD
-    lcd_fill_array(area->x1, area->y1, area->x2, area->y2, (lv_color_t *)sram_buf);
-
 #if USE_INTERNAL_RAM
     /* color_p is a buffer pointer; the buffer is provided by LVGL */
     lcd_fill_array(area->x1, area->y1, area->x2, area->y2, color_p);
-#endif
-
-    LV_MEM_CUSTOM_FREE(sram_buf);
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
     lv_disp_flush_ready(disp_drv);
+#endif
+
 }
 
 
