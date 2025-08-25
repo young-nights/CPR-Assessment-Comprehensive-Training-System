@@ -38,6 +38,7 @@
 #include "bsp_lora_spi.h"
 #include "23lc1024_sram_spi.h"
 #include "23lc1024_sram_test.h"
+#include "23lc1024_sram_tlsf.h"
 #include "tlsf.h"
 
 /* macSYS 头文件 */
