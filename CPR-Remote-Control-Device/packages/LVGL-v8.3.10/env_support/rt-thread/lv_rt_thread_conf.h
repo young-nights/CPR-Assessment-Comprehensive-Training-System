@@ -36,12 +36,12 @@
 #ifdef RT_USING_HEAP
 #  define LV_MEM_CUSTOM 1
 #  define LV_MEM_CUSTOM_INCLUDE LV_RTTHREAD_INCLUDE
-//#  define LV_MEM_CUSTOM_ALLOC   sram_malloc
-//#  define LV_MEM_CUSTOM_FREE    sram_free
-//#  define LV_MEM_CUSTOM_REALLOC sram_realloc
-#  define LV_MEM_CUSTOM_ALLOC   rt_malloc
-#  define LV_MEM_CUSTOM_FREE    rt_free
-#  define LV_MEM_CUSTOM_REALLOC rt_realloc
+#  define LV_MEM_CUSTOM_ALLOC   sram_malloc
+#  define LV_MEM_CUSTOM_FREE    sram_free
+#  define LV_MEM_CUSTOM_REALLOC sram_realloc
+//#  define LV_MEM_CUSTOM_ALLOC   rt_malloc
+//#  define LV_MEM_CUSTOM_FREE    rt_free
+//#  define LV_MEM_CUSTOM_REALLOC rt_realloc
 #  define LV_MEM_SIZE (128U * 1024U)          /*[bytes]*/
 #endif
 
