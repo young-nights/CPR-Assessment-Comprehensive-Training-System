@@ -20,7 +20,7 @@ static void screen_btn_1_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
-    case LV_EVENT_CLICKED:
+    case LV_EVENT_PRESSED:
     {
         lv_obj_clear_flag(guider_ui.screen_start_btn, LV_OBJ_FLAG_HIDDEN);
         lv_obj_add_flag(guider_ui.screen_btn_1, LV_OBJ_FLAG_HIDDEN);
@@ -31,12 +31,11 @@ static void screen_btn_1_event_handler (lv_event_t *e)
     }
 }
 
-
 static void screen_start_btn_event_handler (lv_event_t *e)
 {
     lv_event_code_t code = lv_event_get_code(e);
     switch (code) {
-    case LV_EVENT_CLICKED:
+    case LV_EVENT_PRESSED:
     {
         lv_obj_add_flag(guider_ui.screen_start_btn, LV_OBJ_FLAG_HIDDEN);
         lv_obj_clear_flag(guider_ui.screen_btn_1, LV_OBJ_FLAG_HIDDEN);

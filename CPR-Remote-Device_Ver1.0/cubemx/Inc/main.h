@@ -84,7 +84,6 @@ void MX_ADC1_Init(void);
 #define TOUCH_RST_GPIO_Port GPIOA
 #define TOUCH_INT_Pin GPIO_PIN_6
 #define TOUCH_INT_GPIO_Port GPIOA
-#define TOUCH_INT_EXTI_IRQn EXTI9_5_IRQn
 #define LCD_DC_Pin GPIO_PIN_4
 #define LCD_DC_GPIO_Port GPIOC
 #define LCD_RST_Pin GPIO_PIN_5

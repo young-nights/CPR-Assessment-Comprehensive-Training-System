@@ -43,7 +43,6 @@
 
 /* macSYS 头文件 */
 #include "bsp_typedef.h"
-#include "macLOG.h"
 
 
 /* LVGL 路径下头文件 */

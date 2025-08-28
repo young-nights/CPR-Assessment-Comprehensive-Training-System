@@ -46,7 +46,11 @@ int main(void)
   MX_SPI3_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-
+  //-------软件定时器初始化----------
+  rt_kprintf("----------------------------------------\r\n");
+//  sysTimer_Init();
+//  keyTimer_Init();
+//  ledTimer_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
