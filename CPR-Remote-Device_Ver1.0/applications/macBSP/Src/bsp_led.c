@@ -286,33 +286,40 @@ int8_t LED_GetNumber(void)
 /* 以下是按键扫描线程的创建以及回调函数                                                                          */
 /*---------------------------------------------------------------------------------------------------------------*/
 /**
-  * @brief  ledTimer Callback Function
+  * @brief  This thread entry is used for key scan
   * @retval void
   */
-static void ledTimer_callback(void* parameter)
+void LED_Thread_entry(void* parameter)
 {
-    LED_DrvScan();
+
+    for(;;)
+    {
+        LED_DrvScan();
+        rt_thread_mdelay(10);
+    }
 }
 
 
 
 /**
-  * @brief  ledTimer initialize
+  * @brief  This is a Initialization for matrix key
   * @retval int
   */
-int ledTimer_Init(void)
+rt_thread_t LED_Task_Handle = RT_NULL;
+int LED_Thread_Init(void)
 {
-    static rt_timer_t ledTimer;
-    /* 创建led软件定时器线程 */
-    ledTimer = rt_timer_create("ledTimer_callback", ledTimer_callback, RT_NULL, 1, RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
-    /* 如果句柄创建成功，就开启ledTimer软件定时器 */
-    if(ledTimer != RT_NULL)
+    LED_Task_Handle = rt_thread_create("LED_Thread_entry", LED_Thread_entry, RT_NULL, 4096, 9, 20);
+    /* 检查是否创建成功,成功就启动线程 */
+    if(LED_Task_Handle != RT_NULL)
     {
-        rt_kprintf("PRINTF:%d. LEDTimer initialize succeed!\r\n",Record.kprintf_cnt++);
-        LED_Init();
-        rt_timer_start(ledTimer);
+        rt_kprintf("PRINTF:%d. LED_Thread_entry is Succeed!! \r\n",Record.kprintf_cnt++);
+        rt_thread_startup(LED_Task_Handle);
+    }
+    else {
+        rt_kprintf("PRINTF:%d. LED_Thread_entry is Failed \r\n",Record.kprintf_cnt++);
     }
 
     return RT_EOK;
 }
+INIT_APP_EXPORT(LED_Thread_Init);
 

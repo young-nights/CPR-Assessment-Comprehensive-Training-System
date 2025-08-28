@@ -41,6 +41,7 @@ extern ADC_HandleTypeDef hadc1;
 extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi2;
 extern SPI_HandleTypeDef hspi3;
+extern RTC_HandleTypeDef hrtc;
 
 extern UART_HandleTypeDef huart1;
 /* USER CODE END ET */
@@ -54,6 +55,7 @@ void MX_SPI2_Init(void);
 void MX_SPI1_Init(void);
 void MX_SPI3_Init(void);
 void MX_ADC1_Init(void);
+void MX_RTC_Init(void);
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

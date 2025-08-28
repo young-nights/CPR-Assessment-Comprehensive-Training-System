@@ -22,6 +22,7 @@
 #ifdef RT_USING_RTC
 
 static rt_device_t _rtc_device;
+#ifndef BSP_USING_ONCHIP_RTC
 /*
  * This function initializes rtc_core
  */
@@ -38,6 +39,7 @@ static rt_err_t rt_rtc_init(struct rt_device *dev)
 
     return -RT_ENOSYS;
 }
+#endif
 
 static rt_err_t rt_rtc_open(struct rt_device *dev, rt_uint16_t oflag)
 {
@@ -52,6 +54,7 @@ static rt_err_t rt_rtc_close(struct rt_device *dev)
     return RT_EOK;
 }
 
+#ifndef BSP_USING_ONCHIP_RTC
 static rt_err_t rt_rtc_control(struct rt_device *dev, int cmd, void *args)
 {
 #define TRY_DO_RTC_FUNC(rt_rtc_dev, func_name, args) \
@@ -91,6 +94,7 @@ static rt_err_t rt_rtc_control(struct rt_device *dev, int cmd, void *args)
 
 #undef TRY_DO_RTC_FUNC
 }
+#endif
 
 #ifdef RT_USING_DEVICE_OPS
 const static struct rt_device_ops rtc_core_ops =
@@ -104,6 +108,8 @@ const static struct rt_device_ops rtc_core_ops =
 };
 #endif /* RT_USING_DEVICE_OPS */
 
+
+#ifndef BSP_USING_ONCHIP_RTC
 rt_err_t rt_hw_rtc_register(rt_rtc_dev_t  *rtc,
                             const char    *name,
                             rt_uint32_t    flag,
@@ -133,6 +139,7 @@ rt_err_t rt_hw_rtc_register(rt_rtc_dev_t  *rtc,
     /* register a character device */
     return rt_device_register(device, name, flag);
 }
+#endif
 
 /**
  * Set system date(time not modify, local timezone).

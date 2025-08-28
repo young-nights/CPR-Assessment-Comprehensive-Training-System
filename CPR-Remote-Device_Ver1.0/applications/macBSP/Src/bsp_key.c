@@ -230,32 +230,39 @@ void MatrixKey_Scan(void)
 /* 以下是按键扫描线程的创建以及回调函数                                                                          */
 /*---------------------------------------------------------------------------------------------------------------*/
 /**
-  * @brief  ledTimer Callback Function
+  * @brief  This thread entry is used for key scan
   * @retval void
   */
-static void keyTimer_callback(void* parameter)
+void Matrixkey_Thread_entry(void* parameter)
 {
-    MatrixKey_Scan();
+
+    for(;;)
+    {
+        MatrixKey_Scan();
+        rt_thread_mdelay(10);
+    }
 }
 
 
 
 /**
-  * @brief  keyTimer initialize
+  * @brief  This is a Initialization for matrix key
   * @retval int
   */
-int keyTimer_Init(void)
+rt_thread_t Matrixkey_Task_Handle = RT_NULL;
+int Matrixkey_Thread_Init(void)
 {
-    static rt_timer_t keyTimer;
-    /* 创建led软件定时器线程 */
-    keyTimer = rt_timer_create("keyTimer_callback", keyTimer_callback, RT_NULL, 10, RT_TIMER_FLAG_PERIODIC | RT_TIMER_FLAG_SOFT_TIMER);
-    /* 如果句柄创建成功，就开启ledTimer软件定时器 */
-    if(keyTimer != RT_NULL)
+    Matrixkey_Task_Handle = rt_thread_create("Matrixkey_Thread_entry", Matrixkey_Thread_entry, RT_NULL, 4096, 9, 50);
+    /* 检查是否创建成功,成功就启动线程 */
+    if(Matrixkey_Task_Handle != RT_NULL)
     {
-        rt_kprintf("PRINTF:%d. keyTimer initialize succeed!\r\n",Record.kprintf_cnt++);
-        rt_timer_start(keyTimer);
+        rt_kprintf("PRINTF:%d. Matrixkey_Thread_entry is Succeed!! \r\n",Record.kprintf_cnt++);
+        rt_thread_startup(Matrixkey_Task_Handle);
+    }
+    else {
+        rt_kprintf("PRINTF:%d. Matrixkey_Thread_entry is Failed \r\n",Record.kprintf_cnt++);
     }
 
     return RT_EOK;
 }
-
+INIT_APP_EXPORT(Matrixkey_Thread_Init);
