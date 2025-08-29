@@ -19,6 +19,7 @@
 #include <rthw.h>
 #include <drv_spi.h>
 #include <rtdbg.h>
+
 /* 该头文件包含了所有CubeMX自动生成的初始化引脚 */
 #include "main.h"
 
@@ -44,13 +45,14 @@
 /* macSYS 头文件 */
 #include "bsp_typedef.h"
 
-
 /* LVGL 路径下头文件 */
-#include "gui_guider.h"
 #include "lvgl_gui.h"
 #include "lv_port_disp.h"
-#include "events_init.h"
 #include "lv_port_indev.h"
+#include <macGUI/lvgl_custom/setup_scr_screen.h>
+#include <macGUI/lvgl_examples/lvgl_tests.h>
+
+
 // 这个宏用于使能lv_printf.c文件中的lv_snprintf()函数
 #define USE_LV_SNPRINTF     0
 

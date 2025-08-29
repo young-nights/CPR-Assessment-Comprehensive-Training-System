@@ -9,12 +9,15 @@
  */
 #include <macGUI/lvgl_gui/lvgl_gui.h>
 
-lv_ui gui_guider_lvgl;
+
 
 void lv_user_gui_init(void)
 {
-    extern void setup_ui(lv_ui *ui);
-    setup_ui(&gui_guider_lvgl);
+#ifdef USE_LVGL_TEST
+    lv_example_get_started_1();
+#endif
+
+
 
 }
 
